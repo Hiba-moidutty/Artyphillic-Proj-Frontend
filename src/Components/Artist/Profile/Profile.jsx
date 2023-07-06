@@ -174,8 +174,10 @@ function Profile() {
                 </TabPanel>
       
                 <TabPanel value="3">
+                <div className='userPosts'>
                       {/* Render your post component here */}
                   <ArtistOrders artist_Id={artistId}/>
+                  </div>
                 </TabPanel>
 
                 </TabContext>

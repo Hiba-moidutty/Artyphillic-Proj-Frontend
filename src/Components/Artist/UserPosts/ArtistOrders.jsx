@@ -2,17 +2,20 @@ import React,{ useState,useEffect } from 'react';
 import '../Events/Events.css';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 // import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import axios from '../../../utils/axios';
-import { Eventslist } from '../../../utils/Constants';
+import { EditArtist_OrderStatus, Get_Orders } from '../../../utils/Constants';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import BookEventModal from '../Modal/BookEventModal';
-import EventMenuButton from './EventMenuButton';
+import { Link, useParams } from 'react-router-dom';
 
 const bull = (
   <Box
@@ -26,37 +29,59 @@ const bull = (
 function ArtistOrders() {
   const{ artistId } = useParams()
   const [orderedposts,setOrderedPosts] = useState([]);
-
+ 
   const currentid = Cookies.get('id')
 
   const getOrderedPosts = async () => {
     try {
       const response = await axios.get(`${Get_Orders}${artistId}`)
       console.log(response.data.data,'responssse');
-      setPosts(response.data.data);
+      setOrderedPosts(response.data.data);
     } catch (err) {
       console.log(err)
-      console.log("error is getting user posts profile")
+      console.log("error in getting the artist ordered post ")
       return[];
     }
   };
 
   useEffect (() => {
-    getArtistPosts(artistId);
+    getOrderedPosts(artistId);
   }, [artistId])
 
+  const updateOrderStatus = (orderId, newStatus) => {
+    // Updating the order status in the orderedposts state
+    const updatedPosts = orderedposts.map((post) => {
+      if (post.id.toString() === orderId.toString()) {
+        return { ...post, order_status: newStatus };
+      }
+      return post;
+    });
+
+    setOrderedPosts(updatedPosts);
+    axios.patch(`${EditArtist_OrderStatus}${orderId}`, { order_status: newStatus })
+    .then((response) => {
+      toast.success('Status updated successfully')
+      console.log(response.data);
+    })
+    .catch((error) => {
+      toast.error('Status updation unsuccessfull')
+      console.log(error);
+    });
+  }
+
+  const handleChangeStatus = (event,orderId)=>{
+    const newStatus=event.target.value;
+    updateOrderStatus(orderId,newStatus)
+  }
 
 
   return (
-    <React.Fragment>
+    <div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: '' }}>
-      {events.map((event,index)=>{
-        var imagefile
-        if (event.artist_id === artistId) {
-          imagefile = true
-        }
+      {orderedposts.map((orderedpost,index)=>{
+
         const cardWidth = `${100 / 3}%`;
-        const cardHeight = '300px';
+        const cardHeight = '100%';
         
         return(
       <Box key={index} sx={{ minWidth:325 , width: cardWidth, height: cardHeight ,my:4 }}>
@@ -64,49 +89,58 @@ function ArtistOrders() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-             { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:')} alt="" />}
+              {/* <img src={decodeURIComponent(orderedpost.artist_profileimg).replace('/https:', 'https:')} alt="" /> */}
                   <Link 
-                        to={`/profile/${event.artist_id}`}
+                        to={`/profile/${orderedpost.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
-                        <span>{event.artist_name}</span>
+                        <span>{orderedpost.artist_sellername}</span>
                         </Link>
-                       { event.artist_id == artistId ? ( <div style={{ marginLeft: 'auto'}}>
-                          <EventMenuButton eventId={event.id} eventArtistId={event.artist_id} artistId={artistId} eventName={event.event_name} eventDate={event.event_date}
-                          eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price} eventName={event.event_name}/>
-
-                        </div>) : null }
                   </div>
             </Typography>
-            <br />
-            <Typography variant="h5" component="div">
-             {event.event_name}
+            <Typography component="div">
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              On {event.event_date}, held at {event.event_place}
+              <img style={{width:100,height:100}} src={decodeURIComponent(orderedpost.post_image).replace('/https:', 'https:')} alt="" />
+              
+            <Typography sx={{ mb: 1 }} color="text.secondary">
+              <br />
+            <span style={{ fontWeight: 'bold'}}>Base price : </span>{orderedpost.post_baseprice}
             </Typography>
             <Typography variant="body2">
-              <span>Event Starting Time : </span>{event.event_start_time}am
+              <span style={{ fontWeight: 'bold'}}>Buyer : </span>{orderedpost.artist_buyername}
               <br />
-              <span>Event Ending Time : </span>{event.event_end_time}pm
+              <span style={{ fontWeight: 'bold'}}>Total price paid : </span>{orderedpost.total_price}
               <br />
-              <span>Total Slots Available : </span>{event.total_slots} 
+              <span style={{ fontWeight: 'bold'}}>Payment method: </span>{orderedpost.payment_method} 
               <br />
-              <span>Booking Price : </span>{event.booking_price} 
+              <span style={{ fontWeight: 'bold'}}>Ordered At : </span>{orderedpost.order_date} 
+              {/* <span style={{ fontWeight: 'bold'}}>Order Status: </span>{orderedpost.order_status}  */}
             </Typography>
+          <FormControl variant="standard" sx={{ m:1, minWidth: 200 }}>
+        <InputLabel id="demo-simple-select-standard-label">Order Status</InputLabel>
+          <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={orderedpost.order_status}
+          onChange={(event)=>handleChangeStatus(event,orderedpost.id)}
+          >
+          <MenuItem value="">
+            <em>{orderedpost.order_status}</em>
+          </MenuItem>
+          <MenuItem value='Shipping'>Shipping</MenuItem>
+          <MenuItem value='Delivered'>Delivered</MenuItem>
+        </Select>
+        </FormControl>
           </CardContent>
-          <CardActions>
-
-         {event.artist_id == artistId ? null : ( <BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} peramount={event.booking_price} t_slots={event.total_slots} />)}
-
-          </CardActions>
+          {/* <CardActions>
+          </CardActions> */}
         </Card>
       </Box>
     )
       }
       )}
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 

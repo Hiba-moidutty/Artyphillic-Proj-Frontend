@@ -76,7 +76,8 @@ function ArtistEvents() {
                         </Link>
                        { event.artist_id == artist_Id ? ( <div style={{ marginLeft: 'auto'}}>
                           <EventMenuButton eventId={event.id} eventArtistId={event.artist_id} artistId={artistId} eventName={event.event_name} eventDate={event.event_date}
-                          eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price} eventName={event.event_name}/>
+                          eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price}  
+                         />
 
                         </div>) : null }
                   </div>

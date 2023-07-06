@@ -29,6 +29,7 @@ export const Delete_Event = "deleteevent/";
 export const ArtistBooking_Event = "bookevent/";
 export const ArtistOrdering_Post = "orderpost/";
 export const Get_Orders = "getorders/";
+export const EditArtist_OrderStatus = "editorderstatus/";
 
 
 // Admin
