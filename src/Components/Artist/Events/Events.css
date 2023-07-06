@@ -1,0 +1,12 @@
+
+.artist-info{
+  display: flex;
+  gap: 20px;
+}
+
+.artist-info img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -1,0 +1,76 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+.post {
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 30px;
+  margin-top: 25px;
+  background-color: white;
+  color: #000;
+}
+.container {
+  padding: 20px;
+  max-width: 675px;
+}
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.userInfo {
+  display: flex;
+  gap: 20px;
+}
+.userInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.userInfo .details {
+  display: flex;
+  flex-direction: column;
+}
+.details .name {
+  font-weight: 500;
+}
+.details .date {
+  font-size: 12px;
+}
+.content {
+  margin: 20px 0px;
+}
+.content img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  margin-top: 20px;
+}
+.info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.info .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.baseprice{
+  text-decoration-style: wavy;
+}
+
+.shippingprice{
+  text-decoration-style: wavy;
+}
+
+.post-content{
+  text-decoration-style: solid;
+}
+

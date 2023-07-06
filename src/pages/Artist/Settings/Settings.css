@@ -1,0 +1,19 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+ .settingsStyle {
+  padding: 20px 70px;
+  background-color: #f6f3f3;
+}
+@media (max-width: 783px) {
+  .settingsStyle {
+    padding: 10px;
+ }
+}
+@media (max-width: 960px) {
+ .settingsStyle {
+    padding: 20px;
+ }
+}
+
