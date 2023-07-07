@@ -176,7 +176,7 @@ body {
   top: 200px;
 }
 .profile .profileContainer {
-  padding: 20px 150px;
+  padding: 20px 100px;
 }
 @media (max-width: 783px) {
   .profileContainer {

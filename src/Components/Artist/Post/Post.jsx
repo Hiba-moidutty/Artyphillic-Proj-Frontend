@@ -143,7 +143,7 @@ function Post(){
                 (
                   isOrderPlaced?(
                     <span style={{ color: 'red', fontWeight: 'bold'}} >This post has been SoldOut</span>
-                  ): (
+                  ):(
                     <BuyPost  seller_id={post.artist_id} bprice={post.base_price} sprice={post.shipping_price} postId={post.id} postimage={post.image}/>
                   )
                 )}

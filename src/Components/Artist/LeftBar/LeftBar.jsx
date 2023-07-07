@@ -104,28 +104,6 @@ function LeftBar() {
                 <ListItemText primary="My Network" />
                 {open ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton> */}
-              {/* <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" >
-                  <ListItemButton sx={{ pl: 4 }} onClick={()=>navigate('/connections')}>
-                    <ListItemIcon>
-                      <Person />
-                    </ListItemIcon>
-                    <ListItemText primary="Connections" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}  onClick={()=>navigate('/people-following')}>
-                    <ListItemIcon>
-                      <Person />
-                    </ListItemIcon>
-                    <ListItemText primary="Following" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}  onClick={()=>navigate('/people-followers')}>
-                    <ListItemIcon>
-                      <Person />
-                    </ListItemIcon>
-                    <ListItemText primary="Followers" />
-                  </ListItemButton>
-                </List>
-              </Collapse> */}
               <ListItem >
                 <ListItemButton  onClick={()=>navigate('/settings')}>
                   <ListItemIcon>

@@ -54,21 +54,6 @@ function UserPosts() {
                       {/* {imagefile ? <img src={profilePic} alt="" /> : <img src={post.postedUser?.profilePic} alt="" />} */}
                       <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:')} alt="" />
                       <div className="details">
-                        {/* {
-                          userId === post.postedUser._id ? <Link
-                            to={`/profile`}
-                            style={{ textDecoration: "none", color: "inherit" }}
-                          >
-                            <span className="name">{post.postedUser?.userName}</span>
-                          </Link>
-                            :
-                            <Link
-                              to={`/user-profile/${post?.postedUser?._id}`}
-                              style={{ textDecoration: "none", color: "inherit" }}
-                            >
-                              <span className="name">{post.postedUser?.userName}</span>
-                              </Link>
-                            } */}
       
                         <span className="name">{post.artist_name}</span>
                         <span className="date">{moment(post.created_at).fromNow}</span>

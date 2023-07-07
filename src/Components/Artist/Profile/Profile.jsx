@@ -25,6 +25,7 @@ import AddProfileModal from '../Modal/AddProfileModal';
 import ProfileEditButton from '../Modal/ProfileEditButton';
 import ArtistEvents from '../Events/ArtistEvents';
 import ArtistOrders from '../UserPosts/ArtistOrders';
+import ViewMyOrders from '../UserPosts/ViewMyOrders';
 
 const style = {
   position: 'absolute',
@@ -157,7 +158,10 @@ function Profile() {
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
                       <Tab label="Posts" value="1" />
                       <Tab label="Events" value="2" />
-                      <Tab label="Orders" value="3" />
+                      <Tab label="Sold Orders" value="3" />
+                      <Tab label="My Orders" value="4" />
+                      <Tab label="User BookedEvents" value="5" />
+                      <Tab label="My BookedEvents" value="6" />
                   </TabList>
                 </Box>
                 <TabPanel value="1">
@@ -177,6 +181,13 @@ function Profile() {
                 <div className='userPosts'>
                       {/* Render your post component here */}
                   <ArtistOrders artist_Id={artistId}/>
+                  </div>
+                </TabPanel>
+
+                <TabPanel value="4">
+                <div className='userPosts'>
+                      {/* Render your post component here */}
+                  <ViewMyOrders artist_Id={artistId}/>
                   </div>
                 </TabPanel>
 
