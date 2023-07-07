@@ -26,6 +26,8 @@ import ProfileEditButton from '../Modal/ProfileEditButton';
 import ArtistEvents from '../Events/ArtistEvents';
 import ArtistOrders from '../UserPosts/ArtistOrders';
 import ViewMyOrders from '../UserPosts/ViewMyOrders';
+import UserBookedEvents from '../Events/UserBookedEvents';
+import ArtistBookedEvents from '../Events/ArtistBookedEvents';
 
 const style = {
   position: 'absolute',
@@ -158,39 +160,62 @@ function Profile() {
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
                       <Tab label="Posts" value="1" />
                       <Tab label="Events" value="2" />
-                      <Tab label="Sold Orders" value="3" />
-                      <Tab label="My Orders" value="4" />
-                      <Tab label="User BookedEvents" value="5" />
-                      <Tab label="My BookedEvents" value="6" />
+                      {artist_id.toString() === artistId.toString() && [
+          <Tab key="3" label="Sold Orders" value="3" />,
+          <Tab key="4" label="My Orders" value="4" />,
+          <Tab key="5" label="User BookedEvents" value="5" />,
+          <Tab key="6" label="My BookedEvents" value="6" />,
+        ]}
                   </TabList>
                 </Box>
-                <TabPanel value="1">
-                  <div className='userPosts'>
-                      {/* Render your post component here */}
-                      <UserPosts artistId={artistId} />
-                </div>
-                </TabPanel>
-                <TabPanel value="2">
-                <div className='userPosts'>
-                      {/* Render your post component here */}
-                      <ArtistEvents artist_Id={artistId} />
-                </div>
-                </TabPanel>
-      
-                <TabPanel value="3">
-                <div className='userPosts'>
-                      {/* Render your post component here */}
-                  <ArtistOrders artist_Id={artistId}/>
-                  </div>
-                </TabPanel>
-
-                <TabPanel value="4">
-                <div className='userPosts'>
-                      {/* Render your post component here */}
-                  <ViewMyOrders artist_Id={artistId}/>
-                  </div>
-                </TabPanel>
-
+                {value === '1' && (
+        <TabPanel value="1">
+          <div className="userPosts">
+            {/* Render your post component here */}
+            <UserPosts artistId={artistId} />
+          </div>
+        </TabPanel>
+      )}
+      {value === '2' && (
+        <TabPanel value="2">
+          <div className="userPosts">
+            {/* Render your event component here */}
+            <ArtistEvents artist_Id={artistId} />
+          </div>
+        </TabPanel>
+      )}
+      {value === '3' && artist_id.toString() === artistId.toString() && (
+        <TabPanel value="3">
+          <div className="userPosts">
+            {/* Render your sold orders component here */}
+            <ArtistOrders artist_Id={artist_id} />
+          </div>
+        </TabPanel>
+      )}
+      {value === '4' && artist_id.toString() === artistId.toString() && (
+        <TabPanel value="4">
+          <div className="userPosts">
+            {/* Render your orders component here */}
+            <ViewMyOrders artist_Id={artist_id} />
+          </div>
+        </TabPanel>
+      )}
+      {value === '5' && artist_id.toString() === artistId.toString() && (
+        <TabPanel value="5">
+          <div className="userPosts">
+            {/* Render your orders component here */}
+            <UserBookedEvents artist_Id={artist_id} />
+          </div>
+        </TabPanel>
+      )}
+      {value === '6' && artist_id.toString() === artistId.toString() && (
+        <TabPanel value="6">
+          <div className="userPosts">
+            {/* Render your orders component here */}
+            <ArtistBookedEvents artist_Id={artist_id} />
+          </div>
+        </TabPanel>
+      )}
                 </TabContext>
                 </Box>
                 

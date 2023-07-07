@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from '../../../utils/axios';
-import { ArtistEvents_list } from '../../../utils/Constants';
+import { ArtistEvents_list, Artist_BookedEvents } from '../../../utils/Constants';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import EventMenuButton from './EventMenuButton';
@@ -24,11 +24,11 @@ function ArtistBookedEvents() {
   const artist_Id = Cookies.get('id')
   console.log(artistId,'currenttttt artist');
 
-  const getArtistEvents = async () => {
+  const getArtistBookedEvents = async () => {
     try {
-      const response = await axios.get(`${ArtistEvents_list}${artistId}`)
-      console.log(response.data.data,'responssssssssseee');
-      setArtistBookedEvents(response.data.data);
+      const response = await axios.get(`${Artist_BookedEvents}${artistId}`)
+      console.log(response.data.data,'boooooooked eventssssss responssssssseee');
+      setArtistBookedEvents(response.data);
     } catch (err) {
       console.log(err)
       console.log("error is getting user posts profile")
@@ -37,16 +37,16 @@ function ArtistBookedEvents() {
   };
 
   useEffect (() => {
-    getArtistEvents(artistId);
+    getArtistBookedEvents(artistId);
   }, [artistId])
 
 
   return (
     <div>
-      {events.length == 0 ?(
+      {artistbookedevents.length === 0 ? (
          <>
          <div className="post">
-         <NoDataFound data={"Posts"}/>
+         <NoDataFound data={"Booked Events"}/>
          </div>
          {/* <SkeltonLoad /> */}
          </>

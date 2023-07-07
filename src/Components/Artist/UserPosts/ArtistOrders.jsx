@@ -16,6 +16,7 @@ import axios from '../../../utils/axios';
 import { EditArtist_OrderStatus, Get_Orders } from '../../../utils/Constants';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import NoDataFound from '../NoDataAvailable/NoDataAvailable';
 
 const bull = (
   <Box
@@ -77,6 +78,14 @@ function ArtistOrders() {
 
   return (
     <div>
+      {orderedposts.length === 0 ?(
+         <>
+         <div className="post">
+         <NoDataFound data={"Orders"}/>
+         </div>
+         {/* <SkeltonLoad /> */}
+         </>
+      ) : (
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: '' }}>
       {orderedposts.map((orderedpost,index)=>{
 
@@ -141,8 +150,9 @@ function ArtistOrders() {
       }
       )}
       </div>
+      )}
     </div>
   );
 }
 
-export default ArtistOrders;
+export default ArtistOrders

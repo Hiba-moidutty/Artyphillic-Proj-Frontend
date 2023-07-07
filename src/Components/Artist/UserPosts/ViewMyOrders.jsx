@@ -11,6 +11,7 @@ import axios from '../../../utils/axios';
 import { View_MyOrders } from '../../../utils/Constants';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import NoDataFound from '../NoDataAvailable/NoDataAvailable';
 
 const bull = (
   <Box
@@ -45,6 +46,16 @@ function ViewMyOrders() {
 
 
   return (
+    <div>
+      {orderedposts.length == 0 ?(
+         <>
+         <div className="post">
+         <NoDataFound data={"Orders"}/>
+         </div>
+         {/* <SkeltonLoad /> */}
+         </>
+
+      ) : (
     <div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: '' }}>
       {orderedposts.map((orderedpost,index)=>{
@@ -96,7 +107,10 @@ function ViewMyOrders() {
       )}
       </div>
     </div>
+    )}
+      
+    </div>
   );
 }
 
-export default ViewMyOrders;
+export default ViewMyOrders
