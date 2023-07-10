@@ -10,25 +10,26 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from '../../../utils/axios';
-import { ArtistEvents_list, Artist_BookedEvents } from '../../../utils/Constants';
+import {My_BookedEvents } from '../../../utils/Constants';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import EventMenuButton from './EventMenuButton';
 import NoDataFound from '../NoDataAvailable/NoDataAvailable';
 
-function ArtistBookedEvents() {
-  const{ artistId } = useParams()
-  console.log(artistId,'id passing artist');
-  const [artistbookedevents,setArtistBookedEvents] = useState([]);
-  
-  const artist_Id = Cookies.get('id')
-  console.log(artistId,'currenttttt artist');
 
-  const getArtistBookedEvents = async () => {
+function UserBookedEvents() {
+  const{ userId } = useParams()
+  console.log(userId,'id passing artist');
+  const [userbookedevents,setUserBookedEvents] = useState([]);
+  
+  const user_Id = Cookies.get('id')
+  console.log(userId,'currenttttt artist');
+
+  const getUserBookedEvents = async () => {
     try {
-      const response = await axios.get(`${Artist_BookedEvents}${artistId}`)
+      const response = await axios.get(`${My_BookedEvents}${userId}`)
       console.log(response.data,'boooooooked eventssssss responssssssseee');
-      setArtistBookedEvents(response.data);
+      setUserBookedEvents(response.data);
     } catch (err) {
       console.log(err)
       console.log("error is getting user posts profile")
@@ -37,13 +38,13 @@ function ArtistBookedEvents() {
   };
 
   useEffect (() => {
-    getArtistBookedEvents(artistId);
-  }, [artistId])
+    getUserBookedEvents(userId);
+  }, [userId])
 
 
   return (
     <div>
-      {artistbookedevents.length === 0 ? (
+      {userbookedevents.length === 0 ? (
          <>
          <div className="post">
          <NoDataFound data={"Booked Events"}/>
@@ -53,7 +54,7 @@ function ArtistBookedEvents() {
 
       ) : (
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: '' }}>
-      {artistbookedevents.map((event,index)=>{
+      {userbookedevents.map((event,index)=>{
         // var imagefile
         // if (event.artist_id === artist_Id) {
         //   imagefile = true
@@ -92,11 +93,6 @@ function ArtistBookedEvents() {
               <span>No.of Slots Booked : </span>{event.slot_no} 
             </Typography>
           </CardContent>
-          {/* <CardActions>
-
-         {event.artist_id == artistId ? null : ( <BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} peramount={event.booking_price} t_slots={event.total_slots} />)}
-
-          </CardActions> */}
         </Card>
       </Box>
     )
@@ -107,4 +103,4 @@ function ArtistBookedEvents() {
     </div>
   )}
 
-export default ArtistBookedEvents
+export default UserBookedEvents

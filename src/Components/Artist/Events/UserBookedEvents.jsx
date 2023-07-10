@@ -26,7 +26,7 @@ function UserBookedEvents() {
   const getUserBookedEvents = async () => {
     try {
       const response = await axios.get(`${User_BookedEvents}${artistId}`)
-      console.log(response.data,'responsssssseee');
+      console.log(response.data,'user booked events responsssssseee');
       setUserBookedEvents(response.data);
     } catch (err) {
       console.log(err)
@@ -66,36 +66,24 @@ function UserBookedEvents() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-           <img src={decodeURIComponent(event.artistname.profile_img).replace('/https:', 'https:')} alt="" />
+           <img src={decodeURIComponent(event.user_profileimg).replace('/https:', 'https:')} alt="" />
                   <Link 
-                        to={`/profile/${event.artistname.id}`}
+                        to={`/profile/${event.username}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
-                        <span>{event.artistname.artistname}</span>
+                        <span>{event.user_name}</span>
                         </Link>
-                       {/* { event.artist_id == artist_Id ? ( <div style={{ marginLeft: 'auto'}}>
-                          <EventMenuButton eventId={event.id} eventArtistId={event.artist_id} artistId={artistId} eventName={event.event_name} eventDate={event.event_date}
-                          eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price}  
-                         />
-
-                        </div>) : null } */}
                   </div>
             </Typography>
             <br />
             <Typography variant="h5" component="div">
-             {event.event_name}
+             {event.bookedevent}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              On {event.event_date}, held at {event.event_place}
+              On {event.bookedeventdate}, held at {event.bookedeventplace}
             </Typography>
             <Typography variant="body2">
-              <span>Event Starting Time : </span>{event.event_start_time}am
-              <br />
-              <span>Event Ending Time : </span>{event.event_end_time}pm
-              <br />
-              <span>No.of Slots Booked : </span>{event.total_slots} 
-              <br />
-              <span>Amount Paid : </span>{event.booking_price} 
+              <span>No.of Slots Booked : </span>{event.slot_no} 
             </Typography>
           </CardContent>
           {/* <CardActions>

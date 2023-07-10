@@ -90,9 +90,10 @@ function AddPost() {
     return ( 
       <React.Fragment>
         <Button
-          variant="outlined"
-          color="neutral"
+          variant="contained"
+          color="info"
           startDecorator={<Add />}
+          style={{ color:"#611D42" , backgroundColor: "#F0D9E7",width: "165px" }}
           onClick={() => setOpen(true)}
         >
           New post
@@ -103,10 +104,10 @@ function AddPost() {
             aria-describedby="basic-modal-dialog-description"
             sx={{ maxWidth: 500 }}
           >
-            <Typography id="basic-modal-dialog-title" component="h2">
+            <Typography style={{ color:"#611D42"}} id="basic-modal-dialog-title" component="h2">
               Add new Post
             </Typography>
-            <Typography id="basic-modal-dialog-description" textColor="text.tertiary">
+            <Typography style={{ color:"#BC244A"}} id="basic-modal-dialog-description" textColor="text.tertiary">
               Fill in the information of the project.
             </Typography>
           

@@ -51,12 +51,11 @@ function Profile() {
 
 
   const [artistdetails,setArtistDetails] = useState([]);
-  // const profilePic = useSelector((state) => state.artistname?.artistDetails?.profile_img);
+  // const profilePic = useSelector((state) => state.user?.userDetails?.profile_img);
+  // const coverPic = useSelector((state) => state.user?.userDetails?.cover_img);
   // console.log(profilePic,"huhuuuhuhuhuhuhuhuh")
+
   const artist_id = Cookies.get('id')
-  
-  // const artist_id = useSelector((state) => state.artistname.artistDetails.id);
-  // const artistdetails = useSelector((state) => state.artistname?.email)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => { setOpen(false); setPreview(null) }
@@ -90,7 +89,6 @@ function Profile() {
 
 
   const handleImageSumbit = async (e) => {
-
     e.preventDefault();
     if (profilePicture === "") {
       return alert("oops cannot send null image")
@@ -126,6 +124,19 @@ function Profile() {
             <div className="profile">
 
               <div className="images">
+                {
+                  coverPic ? <img
+                    src={coverPic}
+                    alt=""
+                    className="cover"
+                    onClick={handleOpenCover}
+                  /> : <img
+                  src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:')}
+                    alt=""
+                    className="cover"
+                    onClick={handleOpenCover}
+                  />
+                }
               <img
                 src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:')}
                 alt=""

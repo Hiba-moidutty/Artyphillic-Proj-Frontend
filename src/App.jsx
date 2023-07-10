@@ -18,7 +18,6 @@ import UserProtected from './Router/UserProtected';
 import Public from './Router/Public';
 import UserProfile from './pages/User/UserProfile';
 import ArtistFeedPage from './pages/Artist/ArtistFeedPage';
-import ExplorePage from './pages/Artist/ExplorePage';
 import PostListPage from './pages/Admin/PostListPage';
 import ArtistProfile from './pages/Artist/ArtistProfile';
 import SettingsPage from './pages/Artist/Settings/SettingsPage';
@@ -53,7 +52,11 @@ function App() {
           {/* User side */}
           <Route element={<UserProtected/>}>
           <Route path='/userfeed' element={ <FeedPage />}/>
-          <Route path='/userprofile' element={ <UserProfile />}/>
+          <Route path='/userprofile/:userId' element={ <UserProfile />}/>
+          <Route path='/artistprofile/:artistId' element={ <ArtistProfile />}/>
+          <Route path='/artisteventslist' element={ <EventsPage />}/>
+          <Route path='/usersettings' element={ <SettingsPage/>}/>
+
           </Route>
           
           {/* Artist side */}
@@ -62,7 +65,6 @@ function App() {
             <Route path='/eventslist' element={ <EventsPage />}/>
             <Route path='/profile/:artistId' element={ <ArtistProfile />}/>
             <Route path='/settings' element={ <SettingsPage/>}/>
-            <Route path='/explore' element={ <ExplorePage />}/>
           </Route>         
           </Routes>
     </BrowserRouter>

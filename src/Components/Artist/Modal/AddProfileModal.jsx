@@ -29,7 +29,7 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   )
 }
 
-function AddProfileModal({openModal,setOpenModal,artistId}) {
+function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
 
   const dispatch=useDispatch()
  
@@ -53,6 +53,15 @@ function AddProfileModal({openModal,setOpenModal,artistId}) {
         throw err
     }
   } 
+
+  // const addUserProfileImage = async (userId,file) =>{
+  //   try{
+  //       const response = await axios.post(`${User_Profile_Pic}${artistId}`,file)
+  //       return response
+  //   }catch(err){
+  //       throw err
+  //   }
+  // } 
 
 
   function onSelectFile(e) {

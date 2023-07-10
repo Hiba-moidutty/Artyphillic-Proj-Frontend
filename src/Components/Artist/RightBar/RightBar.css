@@ -88,3 +88,6 @@ body {
 .theme-light .rightBar .container .item .user .buttons button:last-child {
   background-color: #f0544f;
 }
+.event-heading{
+  margin-left: 20px;
+}

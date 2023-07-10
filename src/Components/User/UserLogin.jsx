@@ -11,21 +11,22 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import toast from 'react-hot-toast';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Artist_Login, GoogleLogin_Artist, User_Login } from '../../utils/Constants';
-import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import { auth , provider } from '../../Firebase';
 import { signInWithPopup } from 'firebase/auth';
-import { setLogin , setUserAuth } from '../../Redux/User/usernameSlice';
+import { setCoverPic, setLogin , setUserAuth } from '../../Redux/User/usernameSlice';
 import { setArtistLogin, setArtistAuth, setArtistProfileImage } from '../../Redux/Artist/artistnameSlice';
 import { useNavigate } from "react-router-dom";
 import axios from '../../utils/axios'
 import loginimg from '../../assets/images/loginimg.jpg'
 import artistlogimg from '../../assets/images/artistlogimg.jpg'
 import GoogleButton from './GoogleButton/GoogleButton';
+import { setUserProfileImage } from '../../Redux/User/usernameSlice';
 
 const theme = createTheme();
 
@@ -50,31 +51,37 @@ function UserLogin({userType}) {
     const endpoint = userType === 'user' ? User_Login : Artist_Login
     axios.post(endpoint,data,{headers: { "Content-Type": "application/json"}})
     .then((response)=>{
-      if (response.status != 200)
-        {toast.error("Email or Password is incorrect");} 
-      else {
+      if (response.status === 200 ){
         Cookies.set("role",String(response.data.role));
         Cookies.set(`jwt_${response.data.role}`,String(response.data.token));
         Cookies.set("id",String(response.data.id));
         // toast.success("Logged Successfully");
         if (userType === 'user') {
-          console.log("aetydrdrdgrd123123123123");
-
           Cookies.set("username",String(response.data.name));
           dispatch(setLogin(response.data));
-          // dispatch(setLogin(response.data.username));
-          // dispatch(setLogin(response.data.profileImage));
+          dispatch(setUserProfileImage(response.data.profile_image));
+          dispatch(setCoverPic(response.data.cover_image));
           dispatch(setUserAuth(true));
           navigate("/userfeed");
+          toast.success("Logged in successfully")
         } else if (userType === 'artist') {
           console.log("aetydrdrdgrd");
         Cookies.set("artistname",String(response.data.name));
         dispatch(setArtistLogin(response.data));
         dispatch(setArtistProfileImage(response.data.profileImage));
+        // dispatch(setArtistProfileImage(response.data.coverImage));
         dispatch(setArtistAuth(true));
         navigate("/artistfeed");
         }
       }
+      else {
+      console.log('email entered is wrooooooooooooooooong');
+        toast.error(response.data.status,"Email or Password is incorrect");
+      } 
+  })
+  .catch((error) => {
+    toast.error("An error occurred while logging in");
+    console.error(error);
   });
   };
 

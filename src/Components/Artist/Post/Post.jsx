@@ -57,8 +57,6 @@ function Post(){
     }
     catch (error) {
     }
-    console.error(error);
-    // Handle the error
   }
 
   const [posts,setPosts] = useState([]);

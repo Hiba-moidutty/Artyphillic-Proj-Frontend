@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import './Profile.css';
+import '../../Artist/Profile/Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
-// import LeftBar from '../../../components/user/leftbar/LeftBar'
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { Grid } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-// import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography';
-// import { setCoverPic, setPosts, setProfilepic } from '../../../redux/userSlice'
-// import Post from '../../../components/user/post/Post';
 import toast, { Toaster } from 'react-hot-toast';
-// import { addUserCoverPhoto, addUserProfileImage, fetchUserDetails, fetchUserPosts } from '../../../api/UserServices';
-// import decodeToken from '../../../utils/Services';
-import PeopleIcon from '@mui/icons-material/People';
 import { Stack } from '@mui/material';
-// import ProfileEditButton from '../../../components/user/modals/ProfileEditButton';
-// import NewNavbar from '../../../components/user/navbar/NewNavbar';
-// import AddProfileModal from '../../../components/user/modals/AddProfileModal';
-
-
-
-
+import Cookies from 'js-cookie';
+import { useParams } from 'react-router-dom';
+import { User_Details, addUserCoverPhoto } from '../../../utils/Constants';
+import axios from '../../../utils/axios';
+import AddProfileModal from '../../Artist/Modal/AddProfileModal';
+import ProfileEditButton from '../../Artist/Modal/ProfileEditButton';
+// import ViewMyOrders from '../UserPosts/ViewMyOrders';
+// import UserBookedEvents from '../Events/UserBookedEvents';
+import { setCoverPic, setUserProfileImage } from '../../../Redux/User/usernameSlice';
 
 const style = {
   position: 'absolute',
@@ -36,54 +37,43 @@ const style = {
   p: 4,
 };
 
-function Profile(props) {
-
-
-
+function Profile() {
+  const {userId} = useParams();
 
   const [value, setValue] = React.useState('1');
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const userId = decodeToken();
-  const profilePic = useSelector((state) => state.user?.user?.profilePic);
-  const userName = useSelector((state) => state.user?.user?.userName)
-  const coverPic = useSelector((state) => state.user?.user?.coverPic)
-  const userdetails = useSelector((state) => state.user?.user)
-  const userPosts=useSelector((state)=>state.user?.posts)
-
+  const [userdetails,setUserDetails] = useState([]);
+  // const profilePic = useSelector((state) => state.artistname?.artistDetails?.profile_img);
+  // console.log(profilePic,"huhuuuhuhuhuhuhuhuh")
+  const user_id = Cookies.get('id')
+  
+  // const artist_id = useSelector((state) => state.artistname.artistDetails.id);
+  // const artistdetails = useSelector((state) => state.artistname?.email)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => { setOpen(false); setPreview(null) }
+  const [coverPicture, setCoverPicture] = useState("");
   const [coverLoading, setCoverLoading] = useState(false)
-  const [profilePicture, setProfilePicture] = useState("");
-  const [previewPro, setPreview] = useState(null);
-
   const [openCover, setOpenCover] = useState(false);
   const handleOpenCover = () => setOpenCover(true);
   const handleCloseCover = () => setOpenCover(false);
-  const [coverPicture, setCoverPicture] = useState("");
+
+  const [profilePicture, setProfilePicture] = useState("");
+  const [previewPro, setPreview] = useState(null);
+  const [openModal,setOpenModal] = useState(false)
 
 
-  const [openModal,setOpenModal]=useState(false)
-  const dispatch = useDispatch();
+  const handleChangeImg = (e) => {
+    setProfilePicture(e.target.files[0]);
+    setPreview(e.target.files[0])
 
-
-  const token = localStorage.getItem('token')
-
-  const getUserPosts = async () => {
-    try {
-      const response = await fetchUserPosts(userId)
-      dispatch(setPosts(response.data.posts))
-    } catch (err) {
-      console.log(err,"error is getting user posts profile")
-    }
   }
 
-  const handleCoverChange = (e) => {
-    setCoverPicture(e.target.files[0])
+  const handleChangeCoverImg = (e) => {
+    setCoverPicture(e.target.files[0]);
   }
 
   const handleCoverSubmit = async (e) => {
@@ -93,88 +83,86 @@ function Profile(props) {
     }
     setCoverLoading(true)
     const formData = new FormData();
-    formData.append('image', coverPicture);
+    formData.append('cover_img', coverPicture);
     try {
-    
-      const response = await addUserCoverPhoto(userId,formData)
+      const response = await axios.post(`${addUserCoverPhoto}${userId}`,formData)
       setCoverLoading(false)
       handleCloseCover();
-      dispatch(setCoverPic(response?.data.coverUrl))
+      setCoverPicture(response?.data.profile_picture_url); // Update the cover picture
+      // dispatch(setCoverPic(response?.data.profile_picture_url))
       toast.success("USER COVER PICTURE ADDED")
     } catch (err) {
       setCoverLoading(false);
       handleCloseCover();
-      toast.error("Ops Something went wrong")
+      toast.error("Oops Something went wrong")
     }
-
   }
 
-  const handleChangeImg = (e) => {
-    setProfilePicture(e.target.files[0]);
-    setPreview(e.target.files[0])
-  }
 
-  const handleImageSumbit = async (e) => {
+  const getUserDetails = async () => {
+    try{
+          var token = Cookies.get('jwt_user');
+          const response = await axios.get(`${User_Details}${userId}`,{ headers: { 
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json", 
+            }
+          })  
+          
+          console.log(response.data,'detaaaaaaails hereeeeee');
+          setUserDetails(response.data.data)        
+      }
+      catch(err){
+          console.log("decode error",err)
+      }
+  } 
 
-    e.preventDefault();
-    if (profilePicture === "") {
-      return alert("oops cannot send null image")
-    }
 
+  // const handleImageSumbit = async (e) => {
+  //   e.preventDefault();
+  //   if (profilePicture === "") {
+  //     return alert("oops cannot send null image")
+  //   }
 
-    const formData = new FormData();
-    formData.append('image', profilePicture);
-    try {
-      const response = await addUserProfileImage(userId,formData);
-      handleClose();
-        dispatch(setProfilepic(response?.data.imageUrl))
-        toast.success("USER IMAGE UPDATED")
-    } catch (err) {
-      console.log(err,'error occured')
-      toast.error(err?.response?.data?.message)
-    }
-
-  }
+  //   const formData = new FormData();
+  //   formData.append('image', profilePicture);
+  //   try {
+  //     const response = await addArtistProfileImage(artistId,formData);
+  //     handleClose();
+  //       dispatch(setUserProfileImage(response?.data.profile_image))
+  //       toast.success("USER IMAGE UPDATED")
+  //   } catch (err) {
+  //     console.log(err)
+  //     toast.error(err?.response?.data?.message)
+  //   }
+  // }
 
   useEffect(() => {
-    fetchUserDetails();
-    getUserPosts();
+    getUserDetails(userId);
+  }, []) 
 
-  }, [])
+  
 
   return (
-
     <div>
-      {/* <NewNavbar/>
       <div style={{ display: "flex" }}>
-        <LeftBar /> */}
         <div style={{ flex: 8 }}>
           <div className="home">
             <div className="profile">
-
               <div className="images">
-                {
-                  coverPic ? <img
-                    src={coverPic}
-                    alt="Coverpicture"
-                    className="cover"
-                    onClick={handleOpenCover}
-                  /> : <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwJHtrA3c6twCYZPlOkAsZG1QcjGW04SyPqA&usqp=CAU"
-                    alt="Coverpicture"
+              <img
+                  src={decodeURIComponent(userdetails.cover_img).replace('/https:', 'https:')}
+                    alt=""
                     className="cover"
                     onClick={handleOpenCover}
                   />
-                }
-
-                <img
-                  src={profilePic}
-                  alt=""
-                  className="profilePic"
-                  onClick={()=>setOpenModal(true)}
-                />
-               
-                <AddProfileModal setOpenModal={setOpenModal} openModal={openModal} userId={userId}/>
+              <img
+                src={decodeURIComponent(userdetails.profile_img).replace('/https:', 'https:')}
+                alt=""
+                className="profilePic"
+                onClick={() => setOpenModal(true)}
+              />
+                {user_id === userId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} userId={userId}/>):null}
+                
                 <Modal                                            //MODAL FOR COVER PICTURE CHANGE
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
@@ -196,14 +184,11 @@ function Profile(props) {
                       <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                         <form onSubmit={handleCoverSubmit}>
                           <label htmlFor="myfile">Select a file: </label>
-                          <input accept="image/*" type="file" name="file" onChange={handleCoverChange} />
-
+                          <input accept="image/*" type="file" name="file" onChange={handleChangeCoverImg} />
                           {
-
                             coverLoading ? (<LoadingButton loading variant="outlined">
                               Submit
                             </LoadingButton>) :
-
                               <Button variant="contained" size="small" type='submit'>
                                 Submit
                               </Button>
@@ -217,54 +202,61 @@ function Profile(props) {
               <div className="profileContainer">
                 {/* <CreateIcon fontSize='small' className='editIcon'/> */}
                 <div className="uInfo">
-
                   <div className="center">
                     <Box>
                       <Stack direction={"column"} alignItems={"center"}>
-                        <span style={{ marginTop: "100px" }} >{userName}</span>
-
+                        <span style={{ marginTop: "100px" }}>{userdetails.username}</span>
                       </Stack>
 
                     </Box>
                     <Box>
-                      {userdetails?.gender} / {userdetails?.userBio}
+                      {/* {artistdetails?.gender} / {artistdetails?.userBio} */}
                     </Box> 
-
-                    <Box >
-                      <Stack direction={"row"} spacing={2}>
-                        <Button variant="outlined" startIcon={<PeopleIcon />}>
-                          {userdetails?.followers?.length} Followers
-                        </Button>
-                        <Button variant="outlined" startIcon={<PeopleIcon />}>
-                          {userdetails?.following?.length !== 0 ? userdetails?.following?.length : 0} Followings
-                        </Button>
-                      </Stack>
-                    </Box>
                     <Stack direction="row" justifyContent="end">
-                      <ProfileEditButton userId={userId} userBio={userdetails?.userBio} token={token} />
+                    {user_id === userId ? <ProfileEditButton userId={userId} token={userId} /> : null}
                     </Stack>
                     <div className='details'>
                     </div>
                   </div>
                 </div>
-                <div className='userPosts'>
-
-                  {userPosts.map(post => (
-                    <Post post={post} key={post._id} />
-                  ))}
-                </div>
+                <Box sx={{ width: '100%', typography: 'body1' }}>
+                <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                      {user_id.toString() === userId.toString() && [
+          <Tab key="1" label="My Orders" value="1" />,
+          <Tab key="2" label="My BookedEvents" value="2" />,
+        ]}
+                  </TabList>
+                </Box>
+      {value === '1' && user_id.toString() === userId.toString() && (
+        <TabPanel value="1">
+          <div className="userPosts">
+            {/* Render your orders component here */}
+            {/* <ViewMyOrders user_Id={user_id} /> */}
+          </div>
+        </TabPanel>
+      )}
+      {value === '2' && user_id.toString() === userId.toString() && (
+        <TabPanel value="2">
+          <div className="userPosts">
+            {/* Render your orders component here */}
+            {/* <ArtistBookedEvents user_Id={user_id} /> */}
+          </div>
+        </TabPanel>
+      )}
+                </TabContext>
+                </Box>              
               </div>
             </div>
-
           </div>
         </div>
         <Toaster
           position="top-center"
           reverseOrder={false}
         />
-      {/* </div> */}
+      </div>
     </div>
-
   )
 }
 

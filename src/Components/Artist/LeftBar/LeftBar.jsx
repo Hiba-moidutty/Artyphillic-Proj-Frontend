@@ -54,7 +54,6 @@ function LeftBar() {
       <div className="container">
         <div className="menu">
           {/* <div className="user">
-          
           <span>adharsh</span>
         </div> */}
           <div className="item">

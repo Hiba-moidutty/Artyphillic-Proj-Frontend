@@ -3,6 +3,7 @@ import './ArtistFeedPage.css'
 import NavBarArtist from '../../Components/Artist/NavBarArtist/NavBarArtist';
 import LeftBar from '../../Components/Artist/LeftBar/LeftBar';
 import Post from '../../Components/Artist/Post/Post'
+import RightBar from '../../Components/Artist/RightBar/RightBar';
 
 function ArtistFeedPage() {
   return (
@@ -14,6 +15,9 @@ function ArtistFeedPage() {
         <div className='home'>
         <Post />
       </div>
+      </div>
+      <div  style={{flex : 3}}>
+        <RightBar />
       </div>
       </div>
     </div>

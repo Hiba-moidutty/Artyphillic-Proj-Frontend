@@ -5,6 +5,10 @@ export const baseUrl = "http://127.0.0.1:8000/";
 // User
 export const User_Login = "login/";
 export const User_SignUp = "signup/";
+export const User_Details = "user_profile/";
+export const User_Profile_Pic = "userProfilePic/";
+export const addUserCoverPhoto = "userCoverPic/";
+export const My_BookedEvents = "userbookedevents/";
 
 
 // Artist

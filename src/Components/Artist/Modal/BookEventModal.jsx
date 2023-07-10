@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../../utils/axios';
 import { ArtistBooking_Event } from '../../../utils/Constants';
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const style = {
   position: 'absolute',
@@ -30,7 +30,9 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
   const [loading, setLoading] = useState(false);
   const [bookingDate, setBookingDate] = useState(moment().format('YYYY-MM-DD')); // Set current date
   const [bookedslot,setBookedslot] = useState(0);
-  // const user_id = Cookies.get("id");
+
+  const artist_id = Cookies.get("id");
+
   const navigate = useNavigate();
   console.log(peramount,'booooooking price');
 
@@ -108,7 +110,8 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
     const t_amount=bookedslot*peramount;
 
     const data = JSON.stringify({
-      artistname: artist_Id,
+      artist_name: artist_Id,
+      bookingartist: artist_id,
       eventname: eventId,
       booking_date : bookingDate,
       payment_amount : t_amount,
@@ -119,6 +122,7 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
+        setOpen(false)
         toast.success("Event Booked Successfully");
         navigate('/eventslist');
       })

@@ -135,10 +135,11 @@ function AddEvent() {
     return ( 
       <React.Fragment>
         <Button
-          variant="outlined"
+          variant="contained"
           color="neutral"
           startDecorator={<Add />}
           onClick={() => setOpen(true)}
+          style={{ color:"#611D42" , backgroundColor: "#F0D9E7", width: "165px"}}
         >
           New Event
         </Button>
@@ -148,7 +149,7 @@ function AddEvent() {
             aria-describedby="basic-modal-dialog-description"
             sx={{ maxWidth: 500 , width: '90%' }}
           >
-            <Typography id="basic-modal-dialog-title" component="h2">
+            <Typography style={{ color:"#611D42" }} id="basic-modal-dialog-title" component="h2">
               Add New Event
             </Typography>
             {/* <Typography id="basic-modal-dialog-description" textColor="text.tertiary">

@@ -32,6 +32,8 @@ import { setUserLogout,setUserAuth } from '../../../Redux/User/usernameSlice';
 function LeftAppBar() {
   const navigate = useNavigate();
   const dispatch=useDispatch();
+  const userId = Cookies.get('id')
+  const username = Cookies.get('username')
   const [open, setOpen] = React.useState(true);
 
   // const handleClick=() => {
@@ -43,6 +45,7 @@ function LeftAppBar() {
     console.log('kkkkkkkkkkkkkkkkkkkkkkkk');
     Cookies.remove("role","user");
     Cookies.remove("id");
+    Cookies.remove("usrname");
     dispatch(setUserLogout(null));
     dispatch(setUserAuth(false));
     navigate("/");
@@ -53,18 +56,17 @@ function LeftAppBar() {
       <div className="container">
         <div className="menu">
           {/* <div className="user">
-          
+
           <span>adharsh</span>
         </div> */}
           <div className="item">
             <List sx={{ width: '100%', maxWidth: 360, color: "black" }}>
               <ListItem >
-
                 {/* <AddPostModal /> */}
               {/* <AddPostAndVideo/> */}
               </ListItem>
               <ListItem >
-                <ListItemButton component="a" onClick={() => navigate('/home')}>
+                <ListItemButton component="a" onClick={() => navigate('/userfeed')}>
                   <ListItemIcon>
                     <Home />
                   </ListItemIcon>
@@ -72,7 +74,7 @@ function LeftAppBar() {
                 </ListItemButton>
               </ListItem>
               <ListItem >
-                <ListItemButton component="a" onClick={() => navigate('/explore')}>
+                <ListItemButton component="a" onClick={() => navigate('/eventslist')}>
                   <ListItemIcon>
                     <Article />
                   </ListItemIcon>
@@ -87,14 +89,14 @@ function LeftAppBar() {
               <ListItemText primary="Groups" />
             </ListItemButton>
           </ListItem> */}
-              <ListItem >
-                <ListItemButton component="a" onClick={()=>navigate('/messenger')}>
+              {/* <ListItem >
+                <ListItemButton component="a" onClick={()=>navigate('/settings')}>
                   <ListItemIcon>
                     <Message />
                   </ListItemIcon>
-                  <ListItemText primary="Messages" /> 
+                  <ListItemText primary="Settings" /> 
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
               {/* <ListItemButton onClick={handleClick}>
                 <ListItemIcon>
                 <PeopleAltIcon />
@@ -132,7 +134,7 @@ function LeftAppBar() {
                   <ListItemText primary="Settings" />
                 </ListItemButton>
               </ListItem>
-              <ListItem  onClick={() => navigate('/profile')}>
+              <ListItem  onClick={() => navigate(`/userprofile/${userId}`)}>
 
                 <ListItemButton component="a">
                   <ListItemIcon>
