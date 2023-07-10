@@ -48,10 +48,10 @@ function Profile() {
   const [userdetails,setUserDetails] = useState([]);
   // const profilePic = useSelector((state) => state.artistname?.artistDetails?.profile_img);
   // console.log(profilePic,"huhuuuhuhuhuhuhuhuh")
-  const user_id = Cookies.get('id')
-  
   // const artist_id = useSelector((state) => state.artistname.artistDetails.id);
   // const artistdetails = useSelector((state) => state.artistname?.email)
+  
+  const user_id = Cookies.get('id')
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => { setOpen(false); setPreview(null) }
@@ -152,7 +152,8 @@ function Profile() {
               <img
                   src={decodeURIComponent(userdetails.cover_img).replace('/https:', 'https:')}
                     alt=""
-                    className="cover"
+                    style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                    // className="cover"
                     onClick={handleOpenCover}
                   />
               <img

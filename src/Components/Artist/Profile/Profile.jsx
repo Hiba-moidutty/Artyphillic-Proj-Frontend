@@ -61,7 +61,13 @@ function Profile() {
   const handleClose = () => { setOpen(false); setPreview(null) }
   const [profilePicture, setProfilePicture] = useState("");
   const [previewPro, setPreview] = useState(null);
-  const [openModal,setOpenModal] = useState(false)
+  const [openModal,setOpenModal] = useState(false);
+
+  const [coverPicture, setCoverPicture] = useState("");
+  const [coverLoading, setCoverLoading] = useState(false)
+  const [openCover, setOpenCover] = useState(false);
+  const handleOpenCover = () => setOpenCover(true);
+  const handleCloseCover = () => setOpenCover(false);
 
 
   const handleChangeImg = (e) => {
@@ -69,6 +75,31 @@ function Profile() {
     setPreview(e.target.files[0])
   }
 
+  const handleChangeCoverImg = (e) => {
+    setCoverPicture(e.target.files[0]);
+  }
+
+  const handleCoverSubmit = async (e) => {
+    e.preventDefault();
+    if (coverPicture === "") {
+      return toast.error("oops cannot send null image")
+    }
+    setCoverLoading(true)
+    const formData = new FormData();
+    formData.append('cover_img', coverPicture);
+    try {
+      const response = await axios.post(`${addArtistCoverPhoto}${artistId}`,formData)
+      setCoverLoading(false)
+      handleCloseCover();
+      setCoverPicture(response?.data.profile_picture_url); // Update the cover picture
+      // dispatch(setCoverPic(response?.data.profile_picture_url))
+      toast.success("USER COVER PICTURE ADDED")
+    } catch (err) {
+      setCoverLoading(false);
+      handleCloseCover();
+      toast.error("Oops Something went wrong")
+    }
+  }
 
   const getArtistDetails = async () => {
     try{
@@ -88,25 +119,25 @@ function Profile() {
   } 
 
 
-  const handleImageSumbit = async (e) => {
-    e.preventDefault();
-    if (profilePicture === "") {
-      return alert("oops cannot send null image")
-    }
+  // const handleImageSumbit = async (e) => {
+  //   e.preventDefault();
+  //   if (profilePicture === "") {
+  //     return alert("oops cannot send null image")
+  //   }
   
 
-    const formData = new FormData();
-    formData.append('image', profilePicture);
-    try {
-      const response = await addArtistProfileImage(artistId,formData);
-      handleClose();
-        dispatch(setArtistProfileImage(response?.data.profile_image))
-        toast.success("USER IMAGE UPDATED")
-    } catch (err) {
-      console.log(err)
-      toast.error(err?.response?.data?.message)
-    }
-  }
+  //   const formData = new FormData();
+  //   formData.append('image', profilePicture);
+  //   try {
+  //     const response = await addArtistProfileImage(artistId,formData);
+  //     handleClose();
+  //       dispatch(setArtistProfileImage(response?.data.profile_image))
+  //       toast.success("USER IMAGE UPDATED")
+  //   } catch (err) {
+  //     console.log(err)
+  //     toast.error(err?.response?.data?.message)
+  //   }
+  // }
 
   useEffect(() => {
      getArtistDetails(artistId);
@@ -124,19 +155,21 @@ function Profile() {
             <div className="profile">
 
               <div className="images">
-                {
+                {/* {
                   coverPic ? <img
                     src={coverPic}
                     alt=""
                     className="cover"
                     onClick={handleOpenCover}
-                  /> : <img
-                  src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:')}
+                  /> :  */}
+              <img
+                  src={decodeURIComponent(artistdetails.cover_img).replace('/https:', 'https:')}
                     alt=""
-                    className="cover"
+                    style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                    // className="cover"
                     onClick={handleOpenCover}
                   />
-                }
+                {/* } */}
               <img
                 src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:')}
                 alt=""
@@ -144,6 +177,41 @@ function Profile() {
                 onClick={() => setOpenModal(true)}
               />
                 {artist_id === artistId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} artistId={artistId}/>):null}
+                <Modal                                            //MODAL FOR COVER PICTURE CHANGE
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  open={openCover}
+                  onClose={handleCloseCover}
+                  closeAfterTransition
+                  slots={{ backdrop: Backdrop }}
+                  slotProps={{
+                    backdrop: {
+                      timeout: 500, 
+                    },
+                  }}
+                >
+                  <Fade in={openCover}>
+                    <Box sx={style} borderRadius={5}>
+                      <Typography id="transition-modal-title" variant="h6" component="h2">
+                        ADD COVER PICTURE
+                      </Typography>
+                      <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                        <form onSubmit={handleCoverSubmit}>
+                          <label htmlFor="myfile">Select a file: </label>
+                          <input accept="image/*" type="file" name="file" onChange={handleChangeCoverImg} />
+                          {
+                            coverLoading ? (<LoadingButton loading variant="outlined">
+                              Submit
+                            </LoadingButton>) :
+                              <Button variant="contained" size="small" type='submit'>
+                                Submit
+                              </Button>
+                          }
+                        </form>
+                      </Typography>
+                    </Box>
+                  </Fade>
+                </Modal>
               </div>
               <div className="profileContainer">
                 {/* <CreateIcon fontSize='small' className='editIcon'/> */}

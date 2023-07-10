@@ -17,6 +17,7 @@ export const Artist_Login = "artist_login/";
 export const GoogleLogin_Artist = "artistgooglelogin/";
 export const Artist_Details = "artist_profile/";
 export const Artist_Profile_Pic = "addProfilePic/";
+export const addArtistCoverPhoto = "addCoverPic/";
 export const Artist_Profile_Update = "profile_update/";
 export const Add_ArtistAdress = "addartistaddress/";
 export const Get_ArtistAddress = "getartistaddress/";

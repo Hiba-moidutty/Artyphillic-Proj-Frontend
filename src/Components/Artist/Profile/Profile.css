@@ -144,6 +144,7 @@ body {
 }
 .profile {
   background-color: #f6f3f3;
+  width:100%
 }
 .profileButtonSubmit {
   background-color: #5271ff;
@@ -176,7 +177,7 @@ body {
   top: 200px;
 }
 .profile .profileContainer {
-  padding: 25px 100px;
+  padding:25px 100px;
 }
 @media (max-width: 783px) {
   .profileContainer {
