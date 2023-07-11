@@ -137,9 +137,10 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
   return (
     <React.Fragment>
       <Button
-          variant="outlined"
+          variant="contained"
           color="info"
           // startDecorator={<Add />}
+          style={{color:"#611D42",backgroundColor: "#F0D9E7"}}
           onClick={() => setOpen(true)}
         >
          Book Your Slot Now
@@ -196,11 +197,11 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
           onChange={(e) => setBookedslot(e.target.value)}
           label="Slots"
         >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
+          {t_slots >= 1 && <MenuItem value={1}>1</MenuItem>}
+          {t_slots >= 2 && <MenuItem value={2}>2</MenuItem>}
+          {t_slots >= 3 && <MenuItem value={3}>3</MenuItem>}
+          {t_slots >= 4 && <MenuItem value={4}>4</MenuItem>}
+          {t_slots >= 5 && <MenuItem value={5}>5</MenuItem>}
         </Select>
       </FormControl>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>

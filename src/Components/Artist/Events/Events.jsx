@@ -92,7 +92,12 @@ function Events() {
           </CardContent>
           <CardActions>
 
-         {event.artist_id == artistId ? null : ( <BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} peramount={event.booking_price} t_slots={event.total_slots} />)}
+         {event.artist_id == artistId ? <span style={{fontWeight:'bold',fontSize: 16,color:'#611D42'}}>You cannot book your own event!! </span>
+        : 
+         ( event.total_slots>=0 ?(<BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} 
+         peramount={event.booking_price} t_slots={event.total_slots} />)
+        :
+         (<span style={{ fontWeight: 'bold',fontSize: 16,color:'#611D42'}}>Out of slots</span>))}
 
           </CardActions>
         </Card>
