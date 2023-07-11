@@ -21,6 +21,7 @@ export const addArtistCoverPhoto = "addCoverPic/";
 export const Artist_Profile_Update = "profile_update/";
 export const Add_ArtistAdress = "addartistaddress/";
 export const Get_ArtistAddress = "getartistaddress/";
+export const Delete_Address = "deleteaddress/";
 export const ArtistPost_list = "artistpostlist/";
 export const ArtistEvents_list = "artisteventlist/";
 export const Posts = "postlist/";
