@@ -16,6 +16,7 @@ import axios from '../../../utils/axios'
 import { useEffect } from "react";
 import { setUserDetails } from "../../../Redux/User/usernameSlice";
 import BuyPost from "../../Artist/Modal/BuyPost";
+import UserBuyPost from "../Modals/UserBuyPost";
 
 
 function PostList(){
@@ -51,7 +52,7 @@ function PostList(){
       });
       const orderDetails = response.data.data;
       setOrderDetails(orderDetails);
-      console.log(orderDetails,'oooooooooooooooooooorderrrrrrrrrr');
+      console.log(orderDetails,'oooooooooooooooooorderrrrrrrrrr');
     }
     catch (error) {
     }
@@ -123,7 +124,7 @@ function PostList(){
                   isOrderPlaced?(
                     <span style={{ color: 'red', fontWeight: 'bold'}} >This post has been SoldOut</span>
                   ):(
-                    <BuyPost seller_id={post.artist_id} bprice={post.base_price} sprice={post.shipping_price} postId={post.id} postimage={post.image}/>
+                    <UserBuyPost seller_id={post.artist_id} bprice={post.base_price} sprice={post.shipping_price} postId={post.id} postimage={post.image}/>
                   )
                 )}
               </div>

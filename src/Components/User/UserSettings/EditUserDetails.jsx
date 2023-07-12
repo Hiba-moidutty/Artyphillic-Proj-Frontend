@@ -180,6 +180,7 @@ function EditUserDetails() {
           loadingPosition="start"
           startIcon={<SaveIcon />}
           variant="contained"
+          disabled = {!place }
         >
           <span typeof="button" onClick={()=>handleSaveDetails(userId,body)}>Save</span>
         </LoadingButton>

@@ -22,8 +22,8 @@ import axios from '../../../utils/axios';
 import AddProfileModal from '../../Artist/Modal/AddProfileModal';
 import ProfileEditButton from '../../Artist/Modal/ProfileEditButton';
 // import ViewMyOrders from '../UserPosts/ViewMyOrders';
-// import UserBookedEvents from '../Events/UserBookedEvents';
 import { setCoverPic, setUserProfileImage } from '../../../Redux/User/usernameSlice';
+import UserBookedEvents from '../Modals/UserBookedEvents';
 
 const style = {
   position: 'absolute',
@@ -242,7 +242,7 @@ function Profile() {
         <TabPanel value="2">
           <div className="userPosts">
             {/* Render your orders component here */}
-            {/* <ArtistBookedEvents user_Id={user_id} /> */}
+            <UserBookedEvents user_Id={user_id} />
           </div>
         </TabPanel>
       )}

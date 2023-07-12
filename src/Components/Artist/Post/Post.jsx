@@ -19,7 +19,6 @@ import PostMenuButton from "./PostMenuButton";
 import BuyPost from "../Modal/BuyPost";
 
 
-
 function Post(){
   
   const[orderDetails,setOrderDetails] = useState([]);

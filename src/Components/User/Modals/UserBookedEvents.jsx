@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './Events.css';
+import '../../Artist/Events/Events.css';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,8 +13,7 @@ import axios from '../../../utils/axios';
 import {My_BookedEvents } from '../../../utils/Constants';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
-import EventMenuButton from './EventMenuButton';
-import NoDataFound from '../NoDataAvailable/NoDataAvailable';
+import NoDataFound from '../../Artist/NoDataAvailable/NoDataAvailable';
 
 
 function UserBookedEvents() {
@@ -51,7 +50,6 @@ function UserBookedEvents() {
          </div>
          {/* <SkeltonLoad /> */}
          </>
-
       ) : (
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: '' }}>
       {userbookedevents.map((event,index)=>{

@@ -11,7 +11,7 @@ import moment from 'moment';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../../utils/axios';
-import { ArtistOrdering_Post, Get_ArtistAddress, Get_UserAddress, UserOrdering_Post } from '../../../utils/Constants';
+import { Get_UserAddress, UserOrdering_Post } from '../../../utils/Constants';
 import Cookies from 'js-cookie';
 
 const style = {
@@ -34,6 +34,7 @@ function UserBuyPost({seller_id, bprice, sprice, postId, postimage}){
   const [selectedAddress, setSelectedAddress] = useState({});
   const [orderDate, setOrderDate] = useState(moment().format('YYYY-MM-DD')); // Set current date
   const user_id = Cookies.get('id')
+  console.log(user_id,'uuuuuuuuuuuuuuserrrrrrrrrrrrrrrrr');
   const user_name = Cookies.get('username')
   const navigate = useNavigate();
 
@@ -41,7 +42,6 @@ function UserBuyPost({seller_id, bprice, sprice, postId, postimage}){
   const handleCloseModal = () =>{
     setOpen(false)
   }
-  
     const getUserAddress= async () => {
       const response = await axios.get(`${Get_UserAddress}${user_id}`);
       setAddress(response.data.data);
@@ -203,7 +203,7 @@ useEffect(()=>{
               multiline
               rows={1}
               variant="standard"
-              value={artist_name}
+              value={user_name}
             />
           </Typography>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
