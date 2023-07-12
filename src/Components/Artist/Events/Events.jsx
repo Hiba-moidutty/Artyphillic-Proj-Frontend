@@ -13,11 +13,12 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BookEventModal from '../Modal/BookEventModal';
 import EventMenuButton from './EventMenuButton';
+import UserBookingEvent from '../../User/Modals/UserBookingEvent';
 
 const bull = (
   <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+  component="span"
+  sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
   >
     •
   </Box>
@@ -27,6 +28,13 @@ function Events() {
   const [open,setOpen] = useState(false)
   const [events,setEvents] = useState([]);
   const artistId = Cookies.get('id');
+  let userId;
+
+  const currentrole = Cookies.get('role')
+  if (currentrole == 'user'){ 
+    userId = Cookies.get('id')
+  }
+
   let profilePic = useSelector((state) => state.artistname?.artistDetails?.profile_img);
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -69,7 +77,6 @@ function Events() {
                        { event.artist_id == artistId ? ( <div style={{ marginLeft: 'auto'}}>
                           <EventMenuButton eventId={event.id} eventArtistId={event.artist_id} artistId={artistId} eventName={event.event_name} eventDate={event.event_date}
                           eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price}/>
-
                         </div>) : null }
                   </div>
             </Typography>
@@ -94,11 +101,15 @@ function Events() {
 
          {event.artist_id == artistId ? <span style={{fontWeight:'bold',fontSize: 16,color:'#611D42'}}>You cannot book your own event!! </span>
         : 
-         ( event.total_slots>=0 ?(<BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} 
-         peramount={event.booking_price} t_slots={event.total_slots} />)
-        :
-         (<span style={{ fontWeight: 'bold',fontSize: 16,color:'#611D42'}}>Out of slots</span>))}
-
+         ( event.total_slots>=0 ? ( currentrole == 'user'? ( <UserBookingEvent eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} 
+         peramount={event.booking_price} t_slots={event.total_slots} userId={userId}/>):(
+          <BookEventModal eventId={event.id} eventname={event.event_name} artist_Id={event.artist_id} artistname={event.artist_name} 
+         peramount={event.booking_price} t_slots={event.total_slots} />
+         ))
+         :
+         (
+         <span style={{ fontWeight: 'bold',fontSize: 16,color:'#611D42'}}>Out of slots</span>
+         ))}
           </CardActions>
         </Card>
       </Box>

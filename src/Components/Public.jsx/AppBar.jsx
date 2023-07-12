@@ -147,7 +147,7 @@ const Header = () => {
         >
         ARTYPHILIC
         </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        <Box sx={{ flexGrow: 2, display: { xs: 'none', md: 'flex' } ,justifyContent:'space-between', alignItems: "center"}}>
             <Button
               component = { Link }
               to ="/artistsignup"

@@ -16,10 +16,10 @@ import Typography from '@mui/material/Typography';
 import toast, { Toaster } from 'react-hot-toast';
 import { Stack } from '@mui/material';
 import Cookies from 'js-cookie';
-import { setArtistLogin, setArtistProfileImage } from '../../../Redux/Artist/artistnameSlice';
+import LoadingButton from '@mui/lab/LoadingButton';
 import UserPosts from '../UserPosts/UserPosts';
 import { useParams } from 'react-router-dom';
-import { Artist_Details } from '../../../utils/Constants';
+import { Artist_Details, addArtistCoverPhoto } from '../../../utils/Constants';
 import axios from '../../../utils/axios';
 import AddProfileModal from '../Modal/AddProfileModal';
 import ProfileEditButton from '../Modal/ProfileEditButton';
@@ -43,6 +43,7 @@ const style = {
 
 function Profile() {
   const {artistId} = useParams();
+  console.log(artistId,'kkkkkkkkkkkk');
 
   const [value, setValue] = React.useState('1');
   const handleChange = (event, newValue) => {
@@ -82,7 +83,7 @@ function Profile() {
   const handleCoverSubmit = async (e) => {
     e.preventDefault();
     if (coverPicture === "") {
-      return toast.error("oops cannot send null image")
+      return toast.error("Oops cannot send null image")
     }
     setCoverLoading(true)
     const formData = new FormData();
@@ -93,7 +94,7 @@ function Profile() {
       handleCloseCover();
       setCoverPicture(response?.data.profile_picture_url); // Update the cover picture
       // dispatch(setCoverPic(response?.data.profile_picture_url))
-      toast.success("USER COVER PICTURE ADDED")
+      toast.success("COVER PICTURE ADDED")
     } catch (err) {
       setCoverLoading(false);
       handleCloseCover();
@@ -144,7 +145,6 @@ function Profile() {
   }, []) 
 
   
-
   return (
     <div>
       {/* <NavBarArtist /> */}
@@ -155,13 +155,6 @@ function Profile() {
             <div className="profile">
 
               <div className="images">
-                {/* {
-                  coverPic ? <img
-                    src={coverPic}
-                    alt=""
-                    className="cover"
-                    onClick={handleOpenCover}
-                  /> :  */}
               <img
                   src={decodeURIComponent(artistdetails.cover_img).replace('/https:', 'https:')}
                     alt=""
@@ -177,6 +170,7 @@ function Profile() {
                 onClick={() => setOpenModal(true)}
               />
                 {artist_id === artistId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} artistId={artistId}/>):null}
+                
                 <Modal                                            //MODAL FOR COVER PICTURE CHANGE
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
@@ -296,8 +290,7 @@ function Profile() {
         </TabPanel>
       )}
                 </TabContext>
-                </Box>
-                
+                </Box> 
               </div>
             </div>
           </div>

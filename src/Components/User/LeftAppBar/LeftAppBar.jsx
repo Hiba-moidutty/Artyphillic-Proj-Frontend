@@ -74,11 +74,11 @@ function LeftAppBar() {
                 </ListItemButton>
               </ListItem>
               <ListItem >
-                <ListItemButton component="a" onClick={() => navigate('/eventslist')}>
+                <ListItemButton component="a" onClick={() => navigate('/artisteventslist')}>
                   <ListItemIcon>
                     <Article />
                   </ListItemIcon>
-                  <ListItemText primary="Explore" />
+                  <ListItemText primary="Events" />
                 </ListItemButton>
               </ListItem>
               {/* <ListItem >

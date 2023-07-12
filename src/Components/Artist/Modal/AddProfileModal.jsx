@@ -10,8 +10,10 @@ import { canvasPreview } from "../../utils/canvasPreview";
 import { useDebounceEffect } from "../../utils/useDebounceEffect";
 import { useDispatch } from "react-redux";
 import axios from '../../../utils/axios';
-import { Artist_Profile_Pic } from "../../../utils/Constants";
+import { Artist_Profile_Pic, User_Profile_Pic } from "../../../utils/Constants";
 import { setArtistProfileImage } from "../../../Redux/Artist/artistnameSlice";
+import { toast } from "react-hot-toast";
+import { setUserProfileImage } from "../../../Redux/User/usernameSlice";
 
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   return centerCrop(
@@ -30,7 +32,8 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
-
+  console.log(artistId,'out jjjjjjjjjjjjjjjjjj');
+  console.log(userId,'out jrrrrrrrrrrrrrrrrrrrrrjj');
   const dispatch=useDispatch()
  
   const [imgSrc, setImgSrc] = useState("")
@@ -47,6 +50,7 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
 
   const addArtistProfileImage = async (artistId,file) =>{
     try{
+      console.log(artistId,'inside function jjjjjjjjjjjjjjjjjj');
         const response = await axios.post(`${Artist_Profile_Pic}${artistId}`,file)
         return response
     }catch(err){
@@ -54,14 +58,28 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
     }
   } 
 
-  // const addUserProfileImage = async (userId,file) =>{
-  //   try{
-  //       const response = await axios.post(`${User_Profile_Pic}${artistId}`,file)
-  //       return response
-  //   }catch(err){
-  //       throw err
-  //   }
-  // } 
+  // if (artistId){
+  //   addArtistProfileImage(artistId,file).then((response)=>{
+  //     toast.success("profile updated successfully")
+  //   }).catch((error)=>{
+  //     toast.error("error in updating profile pic")
+  //   })
+  // }else if (userId){
+  //   addUserProfileImage(userId,file).then((response)=>{
+  //     toast.success("user profile updated successfully")
+  //   }).catch((error)=>{
+  //     toast.error("error in updating user profile pic")
+  //   })
+  // }
+
+  const addUserProfileImage = async (userId,file) =>{
+    try{
+        const response = await axios.post(`${User_Profile_Pic}${userId}`,file)
+        return response
+    }catch(err){
+        throw err
+    }
+  } 
 
 
   function onSelectFile(e) {
@@ -85,8 +103,8 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
 
 
  async function  setNewProfilePicture (blob){
-    try{
- 
+    if (artistId) {
+      try{
       const formData=new FormData();
       formData.append('profile_img',blob);
       const response = await addArtistProfileImage(artistId,formData)
@@ -94,9 +112,26 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
       console.log(response.data.profile_picture_url,'rrrrrrrrrr profile pic');
       dispatch(setArtistProfileImage(response?.data.profile_picture_url))
       console.log('profile is saved in redux');
+      toast.success('Profile updated successfully');
     }catch(Err){
       console.log(Err)
+      toast.error('Error updating profile pic');
     }
+  } else if(userId){
+    try{
+      const formData=new FormData();
+      formData.append('profile_img',blob);
+      const response = await addUserProfileImage(userId,formData)
+      setOpenModal(false);
+      console.log(response.data.profile_picture_url,'rrrrrrrrrr profile pic');
+      dispatch(setUserProfileImage(response?.data.profile_picture_url))
+      console.log('profile is saved in redux');
+      toast.success('User profile updated successfully');
+    }catch(Err){
+      console.log(Err)
+      toast.error('Error updating user profile pic');
+    }
+  }
   }
 
 
@@ -114,11 +149,12 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
         URL.revokeObjectURL(blobUrlRef.current)
       }
       blobUrlRef.current = URL.createObjectURL(blob);
-     
-      setNewProfilePicture(blob)
-     
+
+      if (artistId || userId) 
+      {setNewProfilePicture(blob)};
+
     })
-    
+    toast.success('Profile pic updated')
   }
 
   useDebounceEffect(

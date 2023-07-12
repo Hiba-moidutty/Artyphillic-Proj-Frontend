@@ -162,7 +162,7 @@ function Profile() {
                 className="profilePic"
                 onClick={() => setOpenModal(true)}
               />
-                {user_id === userId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} userId={userId}/>):null}
+                {user_id === userId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} userId={userId}/>) : null}
                 
                 <Modal                                            //MODAL FOR COVER PICTURE CHANGE
                   aria-labelledby="transition-modal-title"

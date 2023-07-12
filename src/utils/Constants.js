@@ -9,6 +9,7 @@ export const User_Details = "user_profile/";
 export const User_Profile_Pic = "userProfilePic/";
 export const addUserCoverPhoto = "userCoverPic/";
 export const My_BookedEvents = "userbookedevents/";
+export const User_bookingEvent = "booking_event/";
 
 
 // Artist

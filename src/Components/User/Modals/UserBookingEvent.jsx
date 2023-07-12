@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Typography, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import AddShoppingCartSharpIcon from '@mui/icons-material/AddShoppingCartSharp';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Modal from '@mui/material/Modal';
-// import Button from '@mui/joy/Button';
-import Button from '@mui/material/Button'
+import Button from '@mui/joy/Button';
 import SendIcon from '@mui/icons-material/Send';
 import moment from 'moment';
 // import Swal from 'sweetalert2';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../../utils/axios';
-import { ArtistOrdering_Post, Get_ArtistAddress } from '../../../utils/Constants';
+import { ArtistBooking_Event, User_bookingEvent } from '../../../utils/Constants';
 import Cookies from 'js-cookie';
 
 const style = {
@@ -25,36 +23,23 @@ const style = {
   p: 4,
 };
 
-function BuyPost({seller_id, bprice, sprice, postId, postimage}){
+
+function UserBookingEvent({eventId,eventname,artist_Id,artistname,peramount,t_slots,userId}){
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [addressess, setAddress] = useState([]);
-  const [orderaddr, setOrderaddr] = useState({});
-  const [selectedAddress, setSelectedAddress] = useState({});
-  const [orderDate, setOrderDate] = useState(moment().format('YYYY-MM-DD')); // Set current date
-  const artist_id = Cookies.get('id')
-  const artist_name = Cookies.get('artistname')
-  const navigate = useNavigate();
+  const [bookingDate, setBookingDate] = useState(moment().format('YYYY-MM-DD')); // Set current date
+  const [bookedslot,setBookedslot] = useState(0);
 
+  const navigate = useNavigate();
+  console.log(peramount,'booooooking price');
 
   const handleCloseModal = () =>{
     setOpen(false)
   }
   
-    const getArtistAddress= async () => {
-      const response = await axios.get(`${Get_ArtistAddress}${artist_id}`);
-      setAddress(response.data.data);
-      console.log(response.data.data,'response of artist Addressss');
-    }
-
-
-useEffect(()=>{
-  getArtistAddress();
-},[])
-
-  const handleOrderdateChange = (event) => {
-    setOrderDate(event.target.value)
+  const handleBookingdateChange = (event) => {
+    setBookingDate(event.target.value)
   }
 
   const loadScript = (src) => {
@@ -73,15 +58,10 @@ useEffect(()=>{
     })
   }
 
-  const handleChangeAddress = (event)=>{
-    const selectedAddress = event.target.value
-   setSelectedAddress(selectedAddress);
-   setOrderaddr(selectedAddress.id);
-  }
 
   const handlePayment = async () => {
 
-    const amount = bprice+sprice ;
+    const amount = bookedslot*peramount ;
     const response = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
 
     if(!response) {
@@ -94,12 +74,12 @@ useEffect(()=>{
       amount: amount * 100,
       currency: "INR",
       name: "Artyphilic",
-      description: "Ordering Post Transaction",
+      description: "Booking Event Transaction",
       image: "https://example.com/your_logo",
       handler: function (response) {
         if (response.razorpay_payment_id) {
           // setTrancationId(response.razorpay_payment_id);
-          order_post();
+          booking_event();
         } else {
           toast.error('Payment Failed');
         }
@@ -124,38 +104,25 @@ useEffect(()=>{
     paymentObject.open();
   };
 
-  const order_post = () => {
-    const t_amount=bprice*sprice;
-    // if (
-    //   !seller_id ||
-    //   !artist_id ||
-    //   !postId ||
-    //   !orderDate ||
-    //   !t_amount ||
-    //   !orderaddr
-    // ){
-    //   toast.error(" Please select the Address ");
-    //   return;
-    // }
+  const booking_event = () => {
+    const t_amount=bookedslot*peramount;
 
     const data = JSON.stringify({
-      art_seller:seller_id,
-      artist_buyer:artist_id,
-      post:postId,
-      order_date:orderDate,
-      total_price:t_amount,
-      address:orderaddr,
-      payment_method:'razor-pay'
+      artist_name: artist_Id,
+      username:userId,
+      eventname: eventId,
+      booking_date : bookingDate,
+      payment_amount : t_amount,
+      slot_no : bookedslot,
     });
-
     axios
-      .patch(ArtistOrdering_Post, data, {
+      .patch(User_bookingEvent, data, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
         setOpen(false)
-        toast.success("Post Ordered Successfully");
-        navigate('/artistfeed');
+        toast.success("Event Booked Successfully");
+        navigate('/eventslist');
       })
       .catch((error) => {
         // Handle error
@@ -168,42 +135,44 @@ useEffect(()=>{
   return (
     <React.Fragment>
       <Button
-          variant="outlined"
-          color="secondary"
-          startDecorator={<AddShoppingCartSharpIcon />}
+          variant="contained"
+          color="info"
+          // startDecorator={<Add />}
+          style={{color:"#611D42",backgroundColor: "#F0D9E7"}}
           onClick={() => setOpen(true)}
         >
-          Order Now
+         Book Your Slot Now
         </Button>
-            <Modal
+              <Modal
              open={open}
              onClose={handleCloseModal}
              aria-labelledby="modal-modal-title"
              aria-describedby="modal-modal-description"
              disableEnforceFocus={true}
              >
-          <Box sx={style} borderRadius={5}>
+              <Box sx={style} borderRadius={5}>
+          {/* <Stack direction="row"  spacing={2}> */}
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <span>Post Name</span>
+            <span>Event Name</span>
             <TextField
               sx={{ width: "100%" }}
               id="standard-multiline-static"
               multiline
               rows={1}
               variant="standard"
-              value={postId}
+              value={eventname}
             />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <span>Ordering Date</span>
+            <span>Booking Date</span>
             <TextField
               sx={{ width: "100%" }}
               id="standard-multiline-static"
               multiline
               rows={1}
               variant="standard"
-              value={orderDate}
-              onChange={handleOrderdateChange}
+              value={bookingDate}
+              onChange={handleBookingdateChange}
             />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -214,32 +183,34 @@ useEffect(()=>{
               multiline
               rows={1}
               variant="standard"
-              value={artist_name}
+              value={artistname}
             />
           </Typography>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">Select the Address</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">No.of Slots</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={selectedAddress}
-          onChange={handleChangeAddress}
+          value={bookedslot}
+          onChange={(e) => setBookedslot(e.target.value)}
           label="Slots"
         >
-         {addressess.map((addr) => 
-          <MenuItem key={addr.id} value={addr}>{addr.local_address},{addr.alt_ph_number},{addr.pincode}</MenuItem>
-         )}
+          {t_slots >= 1 && <MenuItem value={1}>1</MenuItem>}
+          {t_slots >= 2 && <MenuItem value={2}>2</MenuItem>}
+          {t_slots >= 3 && <MenuItem value={3}>3</MenuItem>}
+          {t_slots >= 4 && <MenuItem value={4}>4</MenuItem>}
+          {t_slots >= 5 && <MenuItem value={5}>5</MenuItem>}
         </Select>
       </FormControl>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <span>Total Price</span>
+          <span>Amount to be Paid</span>
             <TextField
               sx={{ width: "100%" }}
               id="standard-multiline-static"
               multiline
               rows={1}
               variant="standard"
-              value={bprice+sprice}
+              value={bookedslot*peramount}
             />
           </Typography>
           <Button
@@ -248,14 +219,14 @@ useEffect(()=>{
             onClick={handlePayment}
             endIcon={<SendIcon />}
             loadingPosition="end"
-            variant="contained"
-            disabled={!selectedAddress.id}>
-            <span style={{ color: 'primary', fontWeight: 'bold'}} >Pay and Book</span>
+            variant="contained">
+            <span>Pay and Book</span>
           </Button>
+          {/* </Stack> */}
         </Box>
              </Modal>
             </React.Fragment>
   )
 }
 
-export default BuyPost
+export default UserBookingEvent

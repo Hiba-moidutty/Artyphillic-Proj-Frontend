@@ -9,7 +9,7 @@ import moment from 'moment';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../../utils/axios';
-import { ArtistBooking_Event } from '../../../utils/Constants';
+import { ArtistBooking_Event, User_bookingEvent } from '../../../utils/Constants';
 import Cookies from 'js-cookie';
 
 const style = {
@@ -24,7 +24,7 @@ const style = {
 };
 
 
-function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slots}){
+function BookEventModal({eventId,eventname,artist_Id,artistname,peramount,t_slots,userId}){
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -62,7 +62,6 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
 
 
   const handlePayment = async () => {
-
     const amount = bookedslot*peramount ;
     const response = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
 
@@ -106,25 +105,54 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
     paymentObject.open();
   };
 
-  const booking_event = () => {
-    const t_amount=bookedslot*peramount;
 
+  const handleBookingEventWithArtistId=()=>{
+
+    const t_amount=bookedslot*peramount;
     const data = JSON.stringify({
+        artist_name: artist_Id,
+        bookingartist: artist_id,
+        eventname: eventId,
+        booking_date : bookingDate,
+        payment_amount : t_amount,
+        slot_no : bookedslot,
+      });
+      axios
+        .patch(ArtistBooking_Event, data, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => {
+          setOpen(false)
+          toast.success("Event Booked Successfully");
+          navigate('/eventslist');
+        })
+        .catch((error) => {
+          // Handle error
+          console.log(error);
+          setOpen(false)
+          // setLoading(false);
+        });
+  }
+
+
+  const handleBookingEventWithUserId =()=>{
+    const t_amount = bookedslot * peramount;
+    const data = JSON.stringify({
+      username_id: userId,
       artist_name: artist_Id,
-      bookingartist: artist_id,
       eventname: eventId,
       booking_date : bookingDate,
       payment_amount : t_amount,
       slot_no : bookedslot,
     });
     axios
-      .patch(ArtistBooking_Event, data, {
+      .patch(User_bookingEvent, data, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
         setOpen(false)
         toast.success("Event Booked Successfully");
-        navigate('/eventslist');
+        navigate('/artisteventslist');
       })
       .catch((error) => {
         // Handle error
@@ -132,6 +160,15 @@ function BookEventModal({eventId, eventname,artist_Id,artistname,peramount,t_slo
         setOpen(false)
         // setLoading(false);
       });
+  }
+
+
+  const booking_event = () => {
+    if (artist_Id) {
+      handleBookingEventWithArtistId();
+    } else if (userId) {
+      handleBookingEventWithUserId();
+    }
   };
 
   return (

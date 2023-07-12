@@ -64,7 +64,7 @@ function App() {
             <Route path='/artistfeed' element={ <ArtistFeedPage />}/>
             <Route path='/eventslist' element={ <EventsPage />}/>
             <Route path='/profile/:artistId' element={ <ArtistProfile />}/>
-          <Route path='/viewuserprofile/:userId' element={ <UserProfile />}/>
+            <Route path='/viewuserprofile/:userId' element={ <UserProfile />}/>
             <Route path='/settings' element={ <SettingsPage/>}/>
           </Route>         
           </Routes>

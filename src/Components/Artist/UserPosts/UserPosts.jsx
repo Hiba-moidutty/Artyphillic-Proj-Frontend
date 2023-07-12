@@ -67,6 +67,7 @@ function UserPosts() {
                       post?.image && 
                     <img src={decodeURIComponent(post?.image).replace('/https:', 'https:')} alt="" />
                     }
+                    <hr/>
                     <p className="post-content">{post.art_content}</p>
                     <p className="baseprice">Base Price: {post.base_price}</p>
                     <p className="shippingprice">Shipping Charge:{post.shipping_price}</p>
