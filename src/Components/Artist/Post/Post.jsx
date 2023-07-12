@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 // import Comments from "../comments/Comments";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { Artist_Details, Get_Orders, Posts } from '../../../utils/Constants'
+import { Artist_Details, Get_AllOrders, Get_Orders, Posts } from '../../../utils/Constants'
 import axios from '../../../utils/axios'
 import { useEffect } from "react";
 import { setArtistDetails } from "../../../Redux/Artist/artistnameSlice";
@@ -45,14 +45,14 @@ function Post(){
 
   const getOrderDetails = async () => {
     try{
-      const response = await axios.get(Get_Orders, {
+      const response = await axios.get(Get_AllOrders, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       const orderDetails = response.data.data;
       setOrderDetails(orderDetails);
-      console.log(orderDetails,'oooooooooooooooooooorderrrrrrrrrr');
+      console.log(orderDetails,'ooooooooorderrrrrrrrrr');
     }
     catch (error) {
     }
@@ -139,7 +139,7 @@ function Post(){
                 {artistId == post.artist_id ? null :
                 (
                   isOrderPlaced?(
-                    <span style={{ color: 'red', fontWeight: 'bold'}} >This post has been SoldOut</span>
+                    <span style={{ color: '#BC244A', fontWeight: 'bold'}}>This post has been SoldOut</span>
                   ):(
                     <BuyPost  seller_id={post.artist_id} bprice={post.base_price} sprice={post.shipping_price} postId={post.id} postimage={post.image}/>
                   )

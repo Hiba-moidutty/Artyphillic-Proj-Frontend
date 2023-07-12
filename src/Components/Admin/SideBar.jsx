@@ -88,10 +88,10 @@ function SideBar(){
             <InsertChartIcon className="icon" />
             <span>Stats</span>
           </li> */}
-          <li>
+          {/* <li>
             <NotificationsNoneIcon className="icon" />
             <span>Notifications</span>
-          </li>
+          </li> */}
           {/* <p className="title">SERVICE</p> */}
           {/* <li>
             <PsychologyOutlinedIcon className="icon" />

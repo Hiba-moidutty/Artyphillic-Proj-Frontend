@@ -32,13 +32,13 @@ function EventList(){
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Sl.No</TableCell>
-            <TableCell className="tableCell">Event Name</TableCell>
-            <TableCell className="tableCell">Event Date</TableCell>
-            <TableCell className="tableCell">Place</TableCell>
-            <TableCell className="tableCell">Starting Time</TableCell>
-            <TableCell className="tableCell">Ending Time</TableCell>
-            <TableCell className="tableCell">Hoster</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Sl.No</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Event Name</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Event Date</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Place</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Starting Time</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Ending Time</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Hoster</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

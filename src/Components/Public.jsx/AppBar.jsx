@@ -81,7 +81,7 @@ const Header = () => {
     <AppBar position='static' className='header' style={{backgroundColor:"#241637"}}>
       <Toolbar className='toolbar'>
         <Logo />
-        <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
+        {/* <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -89,7 +89,7 @@ const Header = () => {
             placeholder='Search'
             inputProps={{ 'aria-label': 'search' }}
           />
-        </Search>
+        </Search> */}
 
         {/* Menus */}
 

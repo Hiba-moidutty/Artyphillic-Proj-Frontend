@@ -30,17 +30,17 @@ function NavBar() {
           <SearchOutlinedIcon />
         </div>
         <div className="items">
-          <div className="item">
+          {/* <div className="item">
             <LanguageOutlinedIcon className="icon" />
             English
-          </div>
+          </div> */}
           {/* <div className="item">
             <DarkModeOutlinedIcon
               className="icon"
               onClick={() => dispatch({ type: "TOGGLE" })}
             />
           </div> */}
-          <div className="item">
+          {/* <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
           </div>
           <div className="item">
@@ -60,7 +60,7 @@ function NavBar() {
               alt=""
               className="avatar"
             />
-          </div>
+          </div> */}
           <div className="item">
             {adminemail}
           </div>

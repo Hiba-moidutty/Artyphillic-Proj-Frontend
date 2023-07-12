@@ -22,10 +22,10 @@ function DashboardPage() {
         <Widget type="earning"/>
         <Widget type="balance"/>
       </div>
-      {/* <div className='listContainer'>
+      <div className='listContainer'>
         <div className='listTitle'>User Management</div>
         <UserList />
-      </div> */}
+      </div>
       </div>
       </div>
   )

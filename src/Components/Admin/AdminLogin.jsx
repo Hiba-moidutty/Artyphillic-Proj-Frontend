@@ -45,7 +45,8 @@ function AdminLogin() {
       Cookies.set("role",String(response.data.role));
       Cookies.set("id",String(response.data.id));
       // toast.success("Logged Successfully");
-      dispatch(setAdminLogin(response.data.payload.email));
+      dispatch(setAdminLogin({ email: response.data.data }));
+      // dispatch(setAdminLogin(response.data.payload));
       dispatch(setAdminAuth(true));
       navigate("/dashboard");
     }

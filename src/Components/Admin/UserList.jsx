@@ -58,13 +58,13 @@ function List(){
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Sl.No</TableCell>
-            <TableCell className="tableCell">First Name</TableCell>
-            <TableCell className="tableCell">Last Name</TableCell>
-            <TableCell className="tableCell">UserName</TableCell>
-            <TableCell className="tableCell">Email</TableCell>
-            <TableCell className="tableCell">Joined date </TableCell>
-            <TableCell className="tableCell">Action</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Sl.No</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >First Name</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Last Name</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >UserName</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Email</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Joined date </TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -13,6 +13,7 @@ export const Get_UserAddress = "addressdetails/";
 export const My_BookedEvents = "userbookedevents/";
 export const User_bookingEvent = "booking_event/";
 export const UserOrdering_Post = "orderpost/";
+export const My_Orders = "userorderlist/";
 
 
 // Artist
@@ -43,6 +44,7 @@ export const ArtistOrdering_Post = "orderpost/";
 export const Get_Orders = "getorders/";
 export const View_MyOrders = "viewartistorders/";
 export const EditArtist_OrderStatus = "editorderstatus/";
+export const Get_AllOrders = "orderdetails/";
 
 
 // Admin

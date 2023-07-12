@@ -24,6 +24,7 @@ import ProfileEditButton from '../../Artist/Modal/ProfileEditButton';
 // import ViewMyOrders from '../UserPosts/ViewMyOrders';
 import { setCoverPic, setUserProfileImage } from '../../../Redux/User/usernameSlice';
 import UserBookedEvents from '../Modals/UserBookedEvents';
+import UserOrders from '../Modals/UserOrders';
 
 const style = {
   position: 'absolute',
@@ -234,7 +235,7 @@ function Profile() {
         <TabPanel value="1">
           <div className="userPosts">
             {/* Render your orders component here */}
-            {/* <ViewMyOrders user_Id={user_id} /> */}
+            <UserOrders user_Id={user_id} />
           </div>
         </TabPanel>
       )}

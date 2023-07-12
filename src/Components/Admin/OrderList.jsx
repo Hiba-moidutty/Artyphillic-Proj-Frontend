@@ -15,46 +15,56 @@ function List(){
 
   useEffect(()=>{
       getOrderList();
-    })
+    },[])
 
   const getOrderList=()=>{
     axios.get(Order_List).then((response)=>{
-      setOrders(response.data)
+      setOrders(response.data.data,'oooooooooooooorrrrdersssssssss')
     }).catch((error)=>
     console.log('errrrrorrrr'))
   }
   
   return (
     <TableContainer component={Paper} className="table">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 750 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Sl.No</TableCell>
-            <TableCell className="tableCell">Order Id</TableCell>
-            <TableCell className="tableCell">User Name</TableCell>
-            <TableCell className="tableCell">Artist Name</TableCell>
-            <TableCell className="tableCell">Product</TableCell>
-            <TableCell className="tableCell">Payment Method</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}}>Sl.No</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Order Id</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>User</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Buyer Artist</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Seller Artist</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Post</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Ordered Date</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Order Status</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Payment Amount</TableCell>
+            <TableCell className="tableCell"style={{fontWeight:'bold'}}>Payment Method</TableCell>
+          
             {/* <TableCell className="tableCell">Status</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((row) => (
+          {orders.map((order,index) => (
             <TableRow key={orders.id}>
-              <TableCell className="tableCell">{orders.id}</TableCell>
+              <TableCell className="tableCell">{index+1}</TableCell>
               {/* <TableCell className="tableCell">
                 <div className="cellWrapper">
                   <img src={row.img} alt="" className="image" />
                   {row.product}
                 </div>
               </TableCell> */}
-              <TableCell className="tableCell">{orders.customer}</TableCell>
-              <TableCell className="tableCell">{orders.date}</TableCell>
-              <TableCell className="tableCell">{orders.amount}</TableCell>
-              <TableCell className="tableCell">{orders.method}</TableCell>
-              <TableCell className="tableCell">
+              <TableCell className="tableCell">{order.id}</TableCell>
+              <TableCell className="tableCell">{order.user_name}</TableCell>
+              <TableCell className="tableCell">{order.artist_buyername}</TableCell>
+              <TableCell className="tableCell">{order.artist_sellername}</TableCell>
+              <TableCell className="tableCell">{order.artist_sellername}</TableCell>
+              <TableCell className="tableCell">{order.order_date}</TableCell>
+              <TableCell className="tableCell">{order.order_status}</TableCell>
+              <TableCell className="tableCell">{order.total_price}</TableCell>
+              <TableCell className="tableCell">{order.payment_method}</TableCell>
+              {/* <TableCell className="tableCell">
                 <span className={`status ${orders.status}`}>{orders.status}</span>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           ))}
         </TableBody>

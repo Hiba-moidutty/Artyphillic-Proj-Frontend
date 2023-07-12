@@ -95,7 +95,7 @@ function PostList(){
                 { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:')} alt="" />}
                 <div className="details">
                       <Link
-                        to={`/profile/${post.artist_id}`}
+                        to={`/artistprofile/${post.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
                         <span className="name">{post.artist_name}</span>

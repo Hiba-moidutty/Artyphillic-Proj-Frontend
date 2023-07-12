@@ -54,12 +54,12 @@ function ArtistList() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Sl.no</TableCell>
-            <TableCell className="tableCell">Artist Name</TableCell>
-            <TableCell className="tableCell">Email</TableCell>
-            <TableCell className="tableCell">Place</TableCell>
-            <TableCell className="tableCell">Joined date</TableCell>
-            <TableCell className="tableCell">Action</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Sl.no</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Artist Name</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Email</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Place</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Joined date</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -59,12 +59,12 @@ function PostList(){
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Sl.No</TableCell>
-            <TableCell className="tableCell">Post </TableCell>
-            <TableCell className="tableCell">Artist Name</TableCell>
-            <TableCell className="tableCell">Base Price</TableCell>
-            <TableCell className="tableCell">Shipping Price</TableCell>
-            <TableCell className="tableCell">Action</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Sl.No</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Post </TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Artist Name</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Base Price</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Shipping Price</TableCell>
+            <TableCell className="tableCell" style={{fontWeight:'bold'}} >Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

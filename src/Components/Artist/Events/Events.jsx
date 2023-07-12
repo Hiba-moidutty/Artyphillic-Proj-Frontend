@@ -68,12 +68,19 @@ function Events() {
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
              { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:')} alt="" />}
-                  <Link 
-                        to={`/profile/${event.artist_id}`}
+                  {userId ? (<Link 
+                        to={`/artistprofile/${event.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
                         <span>{event.artist_name}</span>
-                        </Link>
+                        </Link>):(
+                          <Link 
+                          to={`/profile/${event.artist_id}`}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                          >
+                          <span>{event.artist_name}</span>
+                          </Link>
+                        )}
                        { event.artist_id == artistId ? ( <div style={{ marginLeft: 'auto'}}>
                           <EventMenuButton eventId={event.id} eventArtistId={event.artist_id} artistId={artistId} eventName={event.event_name} eventDate={event.event_date}
                           eventStart={event.event_start_time} eventEnd={event.event_end_time} totalSlots={event.total_slots} bookingPrice={event.booking_price}/>

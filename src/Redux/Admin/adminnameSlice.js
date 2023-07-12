@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
   email:null,
-  token:null,
+  // token:null,
   is_authenticated:false,
 }
 
@@ -11,15 +11,15 @@ const adminnameSlice = createSlice({
   initialState,
   reducers:{
     setAdminLogin : (state,action)=>{
-      state.email=action.payload;
-      state.token=action.payload;
+      console.log(action.payload,'ttttttttttttt');
+      state.email=action.payload?.email;
+      // state.token=action.payload.token;
     },
     setAdminAuth : (state,action)=>{
       state.is_authenticated=action.payload;
     },
-    setAdminLogout : (state,action)=>{
-      state.email=action.payload;
-      state.token=action.payload;
+    setAdminLogout : (state)=>{
+      return initialState
     }
   }
 })
