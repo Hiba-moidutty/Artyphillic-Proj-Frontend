@@ -22,6 +22,7 @@ import PostListPage from './pages/Admin/PostListPage';
 import ArtistProfile from './pages/Artist/ArtistProfile';
 import SettingsPage from './pages/Artist/Settings/SettingsPage';
 import EventsPage from './pages/Artist/EventsPage';
+import UserSettingsPage from './pages/User/UserSettingsPage';
 
 function App() {
  
@@ -55,7 +56,7 @@ function App() {
           <Route path='/userprofile/:userId' element={ <UserProfile />}/>
           <Route path='/artistprofile/:artistId' element={ <ArtistProfile />}/>
           <Route path='/artisteventslist' element={ <EventsPage />}/>
-          <Route path='/usersettings' element={ <SettingsPage/>}/>
+          <Route path='/usersettings' element={ <UserSettingsPage />}/>
 
           </Route>
           

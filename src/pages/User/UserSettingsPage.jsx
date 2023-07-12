@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import LeftBar from '../../../Components/Artist/LeftBar/LeftBar'
 import '../Artist/Settings/Settings.css'
+// import { fetchUserDetails } from '../../../api/UserServices'
 // import SkeletonLoading from '../../../components/user/Loading/SkeletonLoading'
 import Cookies from 'js-cookie';
-import axios from '../../../utils/axios';
-import NavBarArtist from '../../../Components/Artist/NavBarArtist/NavBarArtist';
+import axios from '../../utils/axios';
+import NavAppBar from '../../Components/User/NavAppBar/NavAppBar';
+import LeftAppBar from '../../Components/User/LeftAppBar/LeftAppBar';
 import { User_Details } from '../../utils/Constants';
-const LazySettings=React.lazy(()=>import('../../../Components/Artist/Settings/UserSettings'))
-
+const LazySettings=React.lazy(()=>import('../../Components/User/UserSettings/UserSettings'))
 
 const userId = Cookies.get('id');
 const getUserDetails = async () => {
@@ -25,16 +25,16 @@ const getUserDetails = async () => {
 }
 
 
-function SettingsPage() {
+function UserSettingsPage() {
   useEffect(()=>{
     getUserDetails();
   },[])
 
   return (
     <div>
-      <NavBarArtist/>
+      <NavAppBar/>
       <div style={{ display: "flex" }}>
-        <LeftBar/>
+        <LeftAppBar/>
         <div style={{ flex: 8 }}>
       <div className="settingsStyle">
       {/* fallback={<SkeletonLoading/>} */}
@@ -48,4 +48,4 @@ function SettingsPage() {
   )
 }
 
-export default SettingsPage
+export default UserSettingsPage

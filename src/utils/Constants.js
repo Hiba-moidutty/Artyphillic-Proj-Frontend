@@ -7,9 +7,12 @@ export const User_Login = "login/";
 export const User_SignUp = "signup/";
 export const User_Details = "user_profile/";
 export const User_Profile_Pic = "userProfilePic/";
+export const User_Profile_Update = "userprofile_update/";
 export const addUserCoverPhoto = "userCoverPic/";
+export const Get_UserAddress = "addressdetails/";
 export const My_BookedEvents = "userbookedevents/";
 export const User_bookingEvent = "booking_event/";
+export const UserOrdering_Post = "orderpost/";
 
 
 // Artist

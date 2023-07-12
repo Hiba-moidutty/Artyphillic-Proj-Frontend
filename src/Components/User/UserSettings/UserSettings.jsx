@@ -6,9 +6,9 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 // import ChangePassword from './ChangePassword';
 // import SkeletonLoading from '../Loading/SkeletonLoading'
-const LazyEditDetails = React.lazy(()=>import('./EditDetails'))
-const LazyAddAddress = React.lazy(()=>import('./AddArtistAddress'))
-const LazyViewAddress = React.lazy(()=>import('./ViewAddress'))
+const LazyEditDetails = React.lazy(()=>import('./EditUserDetails'))
+const LazyAddAddress = React.lazy(()=>import('./UserAddAddress'))
+const LazyViewAddress = React.lazy(()=>import('./ViewUserAddress'))
 
 function UserSettings() {
   const [value, setValue] = React.useState('1');

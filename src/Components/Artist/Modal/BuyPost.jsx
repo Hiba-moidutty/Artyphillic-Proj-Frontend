@@ -126,17 +126,6 @@ useEffect(()=>{
 
   const order_post = () => {
     const t_amount=bprice*sprice;
-    // if (
-    //   !seller_id ||
-    //   !artist_id ||
-    //   !postId ||
-    //   !orderDate ||
-    //   !t_amount ||
-    //   !orderaddr
-    // ){
-    //   toast.error(" Please select the Address ");
-    //   return;
-    // }
 
     const data = JSON.stringify({
       art_seller:seller_id,

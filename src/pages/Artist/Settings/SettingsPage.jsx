@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import axios from '../../../utils/axios';
 import { Artist_Details } from '../../../utils/Constants';
 import NavBarArtist from '../../../Components/Artist/NavBarArtist/NavBarArtist';
-const LazySettings=React.lazy(()=>import('../../../Components/Artist/Settings/UserSettings'))
+const LazySettings=React.lazy(()=>import('../../../Components/Artist/Settings/ArtistSettings'))
 
 const artistId = Cookies.get('id');
 const getArtistDetails = async () => {

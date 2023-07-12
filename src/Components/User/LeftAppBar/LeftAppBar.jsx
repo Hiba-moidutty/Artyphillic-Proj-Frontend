@@ -127,7 +127,7 @@ function LeftAppBar() {
                 </List>
               </Collapse> */}
               <ListItem >
-                <ListItemButton  onClick={()=>navigate('/settings')}>
+                <ListItemButton  onClick={()=>navigate('/usersettings')}>
                   <ListItemIcon>
                     <Settings />
                   </ListItemIcon>
