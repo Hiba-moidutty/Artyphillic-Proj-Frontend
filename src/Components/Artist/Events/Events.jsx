@@ -67,7 +67,7 @@ function Events() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-             { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:')} alt="" />}
+             { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:/')} alt=""/> : <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:/')} alt="" />}
                   {userId ? (<Link 
                         to={`/artistprofile/${event.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}

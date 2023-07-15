@@ -1,63 +1,14 @@
-import React from 'react'
-import {
-  AccountBox,
-  Home,
-  Article,
-  // ModeNight,
-  Person,
-  Settings,
-  Message,
-  Logout
-} from "@mui/icons-material";
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  // Switch,
-} from "@mui/material";
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import './LeftBar.css'
-import { useNavigate } from 'react-router-dom';
-import AddPost from '../../Artist/Modal/AddPost/AddPost';
-import AddEvent from '../Modal/AddEvent';
-import Cookies from "js-cookie";
-import { useDispatch } from 'react-redux';
-import { setArtistLogout,setArtistAuth } from '../../../Redux/Artist/artistnameSlice';
-
-
-function LeftBar() {
-  const navigate = useNavigate();
-  const dispatch=useDispatch();
-  const [open, setOpen] = React.useState(true);
-  const artistId = Cookies.get('id')
-  const artistname = Cookies.get('artistname')
-  console.log(artistname,'name kittyyyyy');
-  console.log(artistId,'id kittyyyyy');
-
-  const handleLogout = () => {
-    Cookies.remove("jwt_artist");
-    Cookies.remove("role","artist");
-    Cookies.remove("id");
-    Cookies.remove("artistname");
-    dispatch(setArtistLogout());
-    dispatch(setArtistAuth(false));
-    navigate("/");
-  };
-
-  return ( 
-    <div className="leftBar">
-      <div className="container">
-        <div className="item">
-        <List sx={{ width: '100%', maxWidth: 360, color: "black" }}>
-        <ListItem >
+<div className="container">
+        <div className="menu">
+          {/* <div className="user">
+          <span>adharsh</span>
+        </div> */}
+          <div className="item">
+            <List sx={{ width: '100%', maxWidth: 360, color: "black" }}>
+              <ListItem >
               <AddPost />
-        </ListItem>
-        <ListItem >
+              </ListItem>
+              <ListItem >
               <AddEvent />
               </ListItem>
               <ListItem >
@@ -65,7 +16,7 @@ function LeftBar() {
                   <ListItemIcon>
                     <Home />
                   </ListItemIcon>
-                  <ListItemText primary="Home" />
+                  <ListItemText primary="Homepage" />
                 </ListItemButton>
               </ListItem>
               <ListItem >
@@ -134,12 +85,8 @@ function LeftBar() {
                   <Switch />
                 </ListItemButton>
               </ListItem> */}
-
-        </List>
+              
+            </List>
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-export default LeftBar

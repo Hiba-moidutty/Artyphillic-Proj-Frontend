@@ -78,8 +78,9 @@ function Post(){
   return (
   <div>
     { posts.map((post) => {
-
-      const isOrderPlaced = orderDetails.some((order)=>order.post === post.id)
+      let isOrderPlaced = orderDetails==0 ?
+        orderDetails.some((order)=>order.post === post.id) : null
+      
 
       var imagefile
       if (post.artist_id == artistId) {
@@ -93,7 +94,7 @@ function Post(){
           <div className="container ">
             <div className="user">
               <div className="userInfo">
-                { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:')} alt="" />}
+                { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:/')} alt=""/> : <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:/')} alt="" />}
                 <div className="details">
                   {/* {
                     userId === post.postedUser._id ? <Link
@@ -119,11 +120,11 @@ function Post(){
                 </div>
                   <span className="date">{moment(post.created_at).fromNow}</span>
               </div>
-              <PostMenuButton postId={post.id} postedArtistId={post.artist_id} artistId={artistId} content={post.art_content} postImage={post.image}/>
+              {artistId == post.artist_id ? <PostMenuButton postId={post.id} postedArtistId={post.artist_id} artistId={artistId} content={post.art_content} postImage={post.image}/> : null }
             </div>
             <div className="content">
               {post?.image && 
-              <img src={decodeURIComponent(post?.image).replace('/https:','https:')} alt="" />
+              <img src={decodeURIComponent(post?.image).replace('/https:','https:/')} alt="" />
               }
               <hr></hr>
               <span className="post-content">{post.art_content}</span>

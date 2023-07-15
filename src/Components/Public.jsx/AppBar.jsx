@@ -1,7 +1,6 @@
 import {AppBar,Toolbar,Typography,styled,alpha,InputBase,Box,Tooltip,
   IconButton,MenuItem,Avatar,Menu,Button,} from '@mui/material';
-import React, { useState } from 'react';
-import "./AppBar.css";
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -60,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -77,8 +77,26 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset;
+    if (scrollTop > 0) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  // Add a scroll event listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <AppBar position='static' className='header' style={{backgroundColor:"#241637"}}>
+    <AppBar position='fixed' className={`header ${isScrolled ? 'scrolled' : ''}`}
+    style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
       <Toolbar className='toolbar'>
         <Logo />
         {/* <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -147,7 +165,7 @@ const Header = () => {
         >
         ARTYPHILIC
         </Typography>
-        <Box sx={{ flexGrow: 2, display: { xs: 'none', md: 'flex' } ,justifyContent:'space-between', alignItems: "center"}}>
+        <Box sx={{ flexGrow: 2, display: { xs: 'none', md: 'flex' } ,justifyContent:'right', alignItems: "center"}}>
             <Button
               component = { Link }
               to ="/artistsignup"
@@ -188,7 +206,7 @@ const Header = () => {
               Login 
             </Button>
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        {/* <Box sx={{ flexGrow: 1 }}>
           <Tooltip title='Help'>
             <IconButton disableRipple={true} style={{ color: '#f68f62' }}>
               <QuestionMarkIcon />
@@ -204,7 +222,7 @@ const Header = () => {
             <NearMeOutlinedIcon />
           </IconButton>
           </Tooltip>
-        </Box>
+        </Box> */}
 
         {/* Profile menu */}
         {/* <Box sx={{ flexGrow: 0 }}>

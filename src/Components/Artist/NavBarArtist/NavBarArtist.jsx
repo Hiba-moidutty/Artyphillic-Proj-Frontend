@@ -92,6 +92,16 @@ function NavBarArtist({socket}) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const handleLogout = () => {
+    Cookies.remove("jwt_artist");
+    Cookies.remove("role","artist");
+    Cookies.remove("id");
+    Cookies.remove("artistname");
+    dispatch(setArtistLogout());
+    dispatch(setArtistAuth(false));
+    navigate("/");
+  };
+
   useEffect(() => {
     socket?.on('getNotification', (data) => {
       setNotifications((prev) => [...prev, data]);
@@ -136,12 +146,10 @@ function NavBarArtist({socket}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate('/home')}>Home</MenuItem>
-      <MenuItem onClick={() => navigate('/explore')}>Explore</MenuItem>
-      <MenuItem onClick={() => navigate('/messenger')}>Messages</MenuItem>
-      <MenuItem onClick={() => navigate('/connections')}>Connections</MenuItem>
+      <MenuItem onClick={() => navigate('/artistfeed')}>Home</MenuItem>
+      <MenuItem onClick={() => navigate('/eventslist')}>Events</MenuItem>
       <MenuItem onClick={() => navigate('/settings')}>Settings</MenuItem>
-      <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+      <MenuItem onClick={() => navigate(`/profile/${artistId}`)}>Profile</MenuItem>
     </Menu>
   );
 
@@ -188,15 +196,15 @@ function NavBarArtist({socket}) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton size="large" aria-label="show  new mails" color="inherit" onClick={()=>navigate('/messenger')}>
           <Badge  color="error">
             <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
+      </MenuItem> */}
+      {/* <MenuItem>
         <IconButton
           size="large"
           aria-label="show  new notifications"
@@ -207,7 +215,7 @@ function NavBarArtist({socket}) {
           </Badge>
         </IconButton>
         <p onClick={()=>navigate('/notifications')} sx={{cursor:"pointer"}}>Notifications</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -230,11 +238,9 @@ function NavBarArtist({socket}) {
         >
           <LogoutIcon />
         </IconButton >
-        <p onClick={()=>{
-      localStorage.removeItem("token");
-      dispatch(setLogout())
-      navigate('/')
-      }}>Logout</p>
+        <p onClick={
+     handleLogout
+      }>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -270,7 +276,7 @@ function NavBarArtist({socket}) {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
-            onClick={()=>navigate('/home')} style={{cursor:"pointer"}} 
+            onClick={()=>navigate('/artistfeed')} style={{cursor:"pointer"}} 
           >
             ARTYPHILIC
           </Typography>
@@ -279,12 +285,12 @@ function NavBarArtist({socket}) {
           </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show  new mails" color="inherit" onClick={()=>navigate('/messenger')}>
+            {/* <IconButton size="large" aria-label="show  new mails" color="inherit" onClick={()=>navigate('/messenger')}>
               <Badge  color="error">
                 <MailIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton> */}
+            {/* <IconButton
               size="large"
               aria-label="show  new notifications"
               color="inherit"
@@ -292,7 +298,7 @@ function NavBarArtist({socket}) {
               <Badge badgeContent={notifications?.length} color="error">
                 <NotificationsIcon onClick={()=>navigate('/notifications')} sx={{cursor:"pointer"}}/>
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"

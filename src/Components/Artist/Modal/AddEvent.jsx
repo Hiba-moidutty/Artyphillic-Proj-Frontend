@@ -174,7 +174,7 @@ function AddEvent() {
 
                 <FormControl>
                   <FormLabel>Event Place</FormLabel>
-                  <TextField placeholder="Type anything…" value={place} onChange={(e) => setPlace(e.target.value)} />
+                  <TextField placeholder="Place" value={place} onChange={(e) => setPlace(e.target.value)} />
                 </FormControl>
                 <Grid container>
                   <Grid item xs={4} style={{ display: 'flex' }}>
@@ -207,6 +207,9 @@ function AddEvent() {
                 <FormControl>
                 <FormLabel>Booking Price</FormLabel>
                   <TextField  placeholder="Booking Price for this Event" value={bookPrice} onChange={handleBookPriceChange} />
+                  <span style={{ color:"#BC244A"}} id="basic-modal-dialog-description" textColor="text.tertiary">
+              * 2% of your Booking Price will be for Admin
+            </span>
                 </FormControl>
                 <Button type="submit" loading={loading}  disabled = {!name || !place || slots < 10 || !bookPrice }>Submit</Button>
               </Stack>

@@ -1,4 +1,5 @@
-export const baseUrl = "http://127.0.0.1:8000/";
+export const baseUrl = "https://api.artyphilic.site/";
+// export const baseUrl = "http://127.0.0.1:8000/";
 // export const adminbaseUrl = "http://127.0.0.1:8000/admin/";
 
 

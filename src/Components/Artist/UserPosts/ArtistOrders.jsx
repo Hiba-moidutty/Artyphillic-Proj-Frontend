@@ -98,7 +98,7 @@ function ArtistOrders() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-              <img src={decodeURIComponent(orderedpost.artist_profileimg).replace('/https:', 'https:')} alt="" />
+              <img src={decodeURIComponent(orderedpost.artist_profileimg).replace('/https:', 'https:/')} alt="" />
                   <Link 
                         to={`/profile/${orderedpost.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
@@ -110,7 +110,7 @@ function ArtistOrders() {
             <Typography component="div">
             </Typography>
               <br />
-              <img style={{width:100,height:100}} src={decodeURIComponent(orderedpost.post_image).replace('/https:', 'https:')} alt="" />
+              <img style={{width:100,height:100}} src={decodeURIComponent(orderedpost.post_image).replace('/https:', 'https:/')} alt="" />
               
             <Typography sx={{ mb: 1 }} color="text.secondary">
               <br />

@@ -135,7 +135,6 @@ function LeftAppBar() {
                 </ListItemButton>
               </ListItem>
               <ListItem  onClick={() => navigate(`/userprofile/${userId}`)}>
-
                 <ListItemButton component="a">
                   <ListItemIcon>
                     <AccountBox />

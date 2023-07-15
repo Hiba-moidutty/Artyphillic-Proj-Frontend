@@ -8,7 +8,7 @@ const initialState = {
   is_authenticated:false,
   explorePosts:[],
   profile_image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-  cover_image:"https://cdn.pixabay.com/photo/2017/12/28/15/06/geometric-3045402_1280.png"
+  cover_image: "https://cdn.pixabay.com/photo/2017/12/28/15/06/geometric-3045402_1280.png"
 }
 
 const artistnameSlice = createSlice({
@@ -48,6 +48,10 @@ const artistnameSlice = createSlice({
 
     setArtistProfileImage : (state,action)=>{
         state.profile_image = action.payload;
+      },
+
+    setArtistCoverPic:(state,action)=>{
+      console.log(action.payload,"payload data cover picccccccccc")
         state.cover_image = action.payload;
       },
 
@@ -60,5 +64,5 @@ const artistnameSlice = createSlice({
   }
 )
 
-export const{setArtistLogin, setArtistDetails, setArtistAuth, setArtistLogout, setExplorePosts, setArtistProfileImage,setChangeArtistName} = artistnameSlice.actions;
+export const{setArtistLogin, setArtistDetails, setArtistAuth, setArtistLogout, setExplorePosts, setArtistProfileImage,setArtistCoverPic, setChangeArtistName} = artistnameSlice.actions;
 export default artistnameSlice.reducer;

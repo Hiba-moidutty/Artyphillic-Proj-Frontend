@@ -69,7 +69,7 @@ function UserOrders() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-              <img src={decodeURIComponent(orderedpost.artist_profileimg).replace('/https:', 'https:')}  alt=""/>
+              <img src={decodeURIComponent(orderedpost.artist_profileimg).replace('/https:', 'https:/')}  alt=""/>
                   <Link 
                         to={`/profile/${orderedpost.artist_seller}`}
                         style={{ textDecoration: "none", color: "inherit" }}

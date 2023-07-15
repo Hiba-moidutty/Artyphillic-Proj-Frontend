@@ -108,14 +108,14 @@ function AddPost() {
               Add new Post
             </Typography>
             <Typography style={{ color:"#BC244A"}} id="basic-modal-dialog-description" textColor="text.tertiary">
-              Fill in the information of the project.
+              Fill in the information of the post.
             </Typography>
           
               <form onSubmit={handleAddPost}>
-              <Stack spacing={2}>
+              <Stack spacing={1}>
                 <FormControl>
                   <FormLabel>Content</FormLabel>
-                  <Textarea placeholder="Type anything…" value={content} onChange={(e) => setContent(e.target.value)} minRows={3} />
+                  <Textarea placeholder="Type anything…" value={content} onChange={(e) => setContent(e.target.value)} minRows={2} />
                 </FormControl>
                 <FormControl>
                   <Typography id="basic-modal-dialog-description" textColor="text.tertiary">
@@ -126,6 +126,9 @@ function AddPost() {
                 <FormControl>
                 <FormLabel>Base price</FormLabel>
                   <Textarea placeholder="Type base price" value={basePrice}  onChange={handleBasePriceChange} />
+                  <span style={{ color:"#BC244A"}} id="basic-modal-dialog-description" textColor="text.tertiary">
+              * 5% of your Base Price will be for Admin
+            </span>
                 </FormControl>
                 <FormControl>
                 <FormLabel>Shipping price</FormLabel>

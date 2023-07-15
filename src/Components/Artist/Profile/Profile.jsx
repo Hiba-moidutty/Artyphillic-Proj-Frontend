@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 import LeftBar from '../LeftBar/LeftBar'
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -28,6 +28,7 @@ import ArtistOrders from '../UserPosts/ArtistOrders';
 import ViewMyOrders from '../UserPosts/ViewMyOrders';
 import UserBookedEvents from '../Events/UserBookedEvents';
 import ArtistBookedEvents from '../Events/ArtistBookedEvents';
+import { setArtistCoverPic } from '../../../Redux/Artist/artistnameSlice';
 
 const style = {
   position: 'absolute',
@@ -52,9 +53,9 @@ function Profile() {
 
 
   const [artistdetails,setArtistDetails] = useState([]);
-  // const profilePic = useSelector((state) => state.user?.userDetails?.profile_img);
-  // const coverPic = useSelector((state) => state.user?.userDetails?.cover_img);
-  // console.log(profilePic,"huhuuuhuhuhuhuhuhuh")
+ // Access the cover_image and profile_image values from Redux store
+ const coverPic = useSelector((state) => state.artist.cover_image);
+ const profilePic = useSelector((state) => state.artist.profile_image);
 
   const artist_id = Cookies.get('id')
   const [open, setOpen] = useState(false);
@@ -69,6 +70,7 @@ function Profile() {
   const [openCover, setOpenCover] = useState(false);
   const handleOpenCover = () => setOpenCover(true);
   const handleCloseCover = () => setOpenCover(false);
+  const dispatch = useDispatch();
 
 
   const handleChangeImg = (e) => {
@@ -92,8 +94,8 @@ function Profile() {
       const response = await axios.post(`${addArtistCoverPhoto}${artistId}`,formData)
       setCoverLoading(false)
       handleCloseCover();
-      setCoverPicture(response?.data.profile_picture_url); // Update the cover picture
-      // dispatch(setCoverPic(response?.data.profile_picture_url))
+      setCoverPicture(response?.data.cover_picture_url); // Update the cover picture
+      dispatch(setArtistCoverPic(response?.data.cover_picture_url))
       toast.success("COVER PICTURE ADDED")
     } catch (err) {
       setCoverLoading(false);
@@ -110,35 +112,15 @@ function Profile() {
             "Content-Type": "application/json", 
             }
           })  
-          
           console.log(response.data,'detaaaaaaails hereeeeee');
           setArtistDetails(response.data.data)        
       }
       catch(err){
-          console.log("decode error",err)
+          console.log("decode error  artist",err)
       }
   } 
 
 
-  // const handleImageSumbit = async (e) => {
-  //   e.preventDefault();
-  //   if (profilePicture === "") {
-  //     return alert("oops cannot send null image")
-  //   }
-  
-
-  //   const formData = new FormData();
-  //   formData.append('image', profilePicture);
-  //   try {
-  //     const response = await addArtistProfileImage(artistId,formData);
-  //     handleClose();
-  //       dispatch(setArtistProfileImage(response?.data.profile_image))
-  //       toast.success("USER IMAGE UPDATED")
-  //   } catch (err) {
-  //     console.log(err)
-  //     toast.error(err?.response?.data?.message)
-  //   }
-  // }
 
   useEffect(() => {
      getArtistDetails(artistId);
@@ -153,22 +135,34 @@ function Profile() {
         <div style={{ flex: 8 }}>
           <div className="home">
             <div className="profile">
-
               <div className="images">
-              <img
-                  src={decodeURIComponent(artistdetails.cover_img).replace('/https:', 'https:')}
+              {coverPic ? <img
+                  src={decodeURIComponent(coverPic).replace('/https:', 'https:/')}
+                    alt=""
+                    style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                    // className="cover"
+                    onClick={handleOpenCover}
+                  /> : 
+                  <img
+                  src={decodeURIComponent(artistdetails.cover_img).replace('/https:', 'https:/')}
                     alt=""
                     style={{ objectFit: "cover", width: "100%", height: "100%" }}
                     // className="cover"
                     onClick={handleOpenCover}
                   />
+                  }
                 {/* } */}
-              <img
-                src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:')}
+              {profilePic ? <img
+                src={decodeURIComponent(profilePic).replace('/https:', 'https:/')}
                 alt=""
                 className="profilePic"
                 onClick={() => setOpenModal(true)}
-              />
+              /> : <img
+              src={decodeURIComponent(artistdetails.profile_img).replace('/https:', 'https:/')}
+              alt=""
+              className="profilePic"
+              onClick={() => setOpenModal(true)}
+            />}
                 {artist_id === artistId ? (<AddProfileModal setOpenModal={setOpenModal} openModal={openModal} artistId={artistId}/>):null}
                 
                 <Modal                                            //MODAL FOR COVER PICTURE CHANGE
@@ -193,11 +187,13 @@ function Profile() {
                         <form onSubmit={handleCoverSubmit}>
                           <label htmlFor="myfile">Select a file: </label>
                           <input accept="image/*" type="file" name="file" onChange={handleChangeCoverImg} />
+                          <br />
+                          <br />
                           {
                             coverLoading ? (<LoadingButton loading variant="outlined">
                               Submit
                             </LoadingButton>) :
-                              <Button variant="contained" size="small" type='submit'>
+                              <Button variant="contained" size="small" type='submit' >
                                 Submit
                               </Button>
                           }

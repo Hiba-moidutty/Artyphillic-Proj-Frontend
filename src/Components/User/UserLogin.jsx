@@ -19,14 +19,13 @@ import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import { auth , provider } from '../../Firebase';
 import { signInWithPopup } from 'firebase/auth';
-import { setCoverPic, setLogin , setUserAuth } from '../../Redux/User/usernameSlice';
-import { setArtistLogin, setArtistAuth, setArtistProfileImage } from '../../Redux/Artist/artistnameSlice';
+import {  setLogin , setUserAuth, setUserCoverPic, setUserProfilePic } from '../../Redux/User/usernameSlice';
+import { setArtistLogin, setArtistAuth, setArtistProfileImage, setArtistCoverPic } from '../../Redux/Artist/artistnameSlice';
 import { useNavigate } from "react-router-dom";
 import axios from '../../utils/axios'
 import loginimg from '../../assets/images/loginimg.jpg'
 import artistlogimg from '../../assets/images/artistlogimg.jpg'
 import GoogleButton from './GoogleButton/GoogleButton';
-import { setUserProfileImage } from '../../Redux/User/usernameSlice';
 
 const theme = createTheme();
 
@@ -58,18 +57,22 @@ function UserLogin({userType}) {
         // toast.success("Logged Successfully");
         if (userType === 'user') {
           Cookies.set("username",String(response.data.name));
-          dispatch(setLogin(response.data));
-          dispatch(setUserProfileImage(response.data.profile_image));
-          dispatch(setCoverPic(response.data.cover_image));
+          const user_details = setLogin(response.data)
+          console.log("user details ", user_details);
+          dispatch(user_details);
+          dispatch(setUserProfilePic(response.data.profile_image));
+          dispatch(setUserCoverPic(response.data.cover_image));
           dispatch(setUserAuth(true));
           navigate("/userfeed");
           toast.success("Logged in successfully")
         } else if (userType === 'artist') {
           console.log("aetydrdrdgrd");
         Cookies.set("artistname",String(response.data.name));
-        dispatch(setArtistLogin(response.data));
+        const artist_details = setArtistLogin(response.data)
+        console.log("artist details ", artist_details);
+        dispatch(artist_details);
         dispatch(setArtistProfileImage(response.data.profileImage));
-        // dispatch(setArtistProfileImage(response.data.coverImage));
+        dispatch(setArtistCoverPic(response.data.cover_image));
         dispatch(setArtistAuth(true));
         navigate("/artistfeed");
         }

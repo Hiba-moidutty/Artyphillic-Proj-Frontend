@@ -52,7 +52,7 @@ function UserPosts() {
                   <div className="user">
                     <div className="userInfo">
                       {/* {imagefile ? <img src={profilePic} alt="" /> : <img src={post.postedUser?.profilePic} alt="" />} */}
-                      <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:')} alt="" />
+                      <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:/')} alt="" />
                       <div className="details">
       
                         <span className="name">{post.artist_name}</span>
@@ -65,7 +65,7 @@ function UserPosts() {
                   <div className="content">
                     {
                       post?.image && 
-                    <img src={decodeURIComponent(post?.image).replace('/https:', 'https:')} alt="" />
+                    <img src={decodeURIComponent(post?.image).replace('/https:', 'https:/')} alt="" />
                     }
                     <hr/>
                     <p className="post-content">{post.art_content}</p>

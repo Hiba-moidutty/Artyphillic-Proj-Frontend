@@ -1,12 +1,12 @@
 import React from 'react'
-// import Home from '../Components/Home';
 import AppBar from '../Components/Public.jsx/AppBar';
+import ImageCarousel from '../Components/Public.jsx/ImageCarousel';
 
 function HomePage() {
   return (
     <div>
+      <ImageCarousel />
       <AppBar />
-      {/* <Home /> */}
     </div>
   )
 }

@@ -77,8 +77,8 @@ function SignUp() {
 
   const handleLNameChange = (e) => {
     setLName(e.target.value);
-    if (!/^[A-Za-z]{3,}$/.test(e.target.value)){
-      setLNameError("Must contain at least 3 letters and letters only");
+    if (!/^[A-Za-z]{1,}$/.test(e.target.value)){
+      setLNameError("Must contain at least 1 letters and letters only");
     }else{
       setLNameError("");
     }

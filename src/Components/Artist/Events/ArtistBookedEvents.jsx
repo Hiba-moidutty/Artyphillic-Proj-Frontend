@@ -67,9 +67,9 @@ function ArtistBookedEvents() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-           <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:')} alt="" />
+           <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:/')} alt="" />
                   <Link 
-                        to={`/profile/${event.artist_id}`}
+                        to={`/profile/${event.artist_name}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
                         <span>{event.eventartist_name}</span>
@@ -85,7 +85,7 @@ function ArtistBookedEvents() {
                         to={`/profile/${event.artist_name}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
-              On {event.event_date}, held at {event.bookedeventplace}
+              On {event.bookedeventdate}, held at {event.bookedeventplace}
                         </Link>
             </Typography>
             <Typography variant="body2">

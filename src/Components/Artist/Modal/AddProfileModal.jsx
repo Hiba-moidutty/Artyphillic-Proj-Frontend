@@ -13,7 +13,7 @@ import axios from '../../../utils/axios';
 import { Artist_Profile_Pic, User_Profile_Pic } from "../../../utils/Constants";
 import { setArtistProfileImage } from "../../../Redux/Artist/artistnameSlice";
 import { toast } from "react-hot-toast";
-import { setUserProfileImage } from "../../../Redux/User/usernameSlice";
+import { setUserProfilePic } from "../../../Redux/User/usernameSlice";
 
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   return centerCrop(
@@ -32,9 +32,9 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
-  console.log(artistId,'out jjjjjjjjjjjjjjjjjj');
-  console.log(userId,'out jrrrrrrrrrrrrrrrrrrrrrjj');
-  const dispatch=useDispatch()
+  console.log(artistId,'out artist idddddddd');
+  console.log(userId,'out userrrrrrrrrrid');
+  const dispatch = useDispatch()
  
   const [imgSrc, setImgSrc] = useState("")
   const previewCanvasRef = useRef(null)
@@ -58,19 +58,6 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
     }
   } 
 
-  // if (artistId){
-  //   addArtistProfileImage(artistId,file).then((response)=>{
-  //     toast.success("profile updated successfully")
-  //   }).catch((error)=>{
-  //     toast.error("error in updating profile pic")
-  //   })
-  // }else if (userId){
-  //   addUserProfileImage(userId,file).then((response)=>{
-  //     toast.success("user profile updated successfully")
-  //   }).catch((error)=>{
-  //     toast.error("error in updating user profile pic")
-  //   })
-  // }
 
   const addUserProfileImage = async (userId,file) =>{
     try{
@@ -124,7 +111,7 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
       const response = await addUserProfileImage(userId,formData)
       setOpenModal(false);
       console.log(response.data.profile_picture_url,'rrrrrrrrrr profile pic');
-      dispatch(setUserProfileImage(response?.data.profile_picture_url))
+      dispatch(setUserProfilePic(response?.data.profile_picture_url))
       console.log('profile is saved in redux');
       toast.success('User profile updated successfully');
     }catch(Err){
@@ -152,7 +139,6 @@ function AddProfileModal({openModal,setOpenModal,artistId,userId}) {
 
       if (artistId || userId) 
       {setNewProfilePicture(blob)};
-
     })
     toast.success('Profile pic updated')
   }

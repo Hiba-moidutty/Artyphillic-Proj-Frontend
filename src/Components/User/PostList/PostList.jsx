@@ -92,7 +92,7 @@ function PostList(){
           <div className="container ">
             <div className="user">
               <div className="userInfo">
-                { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:')} alt=""/> : <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:')} alt="" />}
+                { imagefile ? <img src={decodeURIComponent(profilePic).replace('/https:', 'https:/')} alt=""/> : <img src={decodeURIComponent(post.artist_profileimg).replace('/https:', 'https:/')} alt="" />}
                 <div className="details">
                       <Link
                         to={`/artistprofile/${post.artist_id}`}
@@ -106,7 +106,7 @@ function PostList(){
             </div>
             <div className="content">
               {post?.image && 
-              <img src={decodeURIComponent(post?.image).replace('/https:','https:')} alt="" />
+              <img src={decodeURIComponent(post?.image).replace('/https:','https:/')} alt="" />
               }
               <hr></hr>
               <span className="post-content">{post.art_content}</span>

@@ -8,7 +8,6 @@ function UserProfile() {
 
   const {userId} = useParams();
 
-
   return (
     <div>
       <NavAppBar />

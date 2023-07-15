@@ -31,11 +31,11 @@ const usernameSlice = createSlice({
       state.is_authenticated = action.payload;
     },
 
-    setUserProfileImage : (state,action)=>{
+    setUserProfilePic : (state,action)=>{
       state.profile_image = action.payload;
     },
 
-    setCoverPic:(state,action)=>{
+    setUserCoverPic:(state,action)=>{
       state.cover_image = action.payload;
     },
 
@@ -48,5 +48,5 @@ const usernameSlice = createSlice({
   }
 })
 
-export const{setLogin, setUserAuth,setUserDetails, setUserProfileImage, setCoverPic, setUserLogout} = usernameSlice.actions;
+export const{setLogin, setUserAuth,setUserDetails, setUserProfilePic, setUserCoverPic, setUserLogout} = usernameSlice.actions;
 export default usernameSlice.reducer;

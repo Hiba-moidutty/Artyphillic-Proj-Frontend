@@ -23,7 +23,7 @@ function ArtistSettings() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="Edit the Details" value="1" />
-          <Tab label="Change Password" value="2" />
+          {/* <Tab label="Change Password" value="2" /> */}
           <Tab label="Add Address" value="3" />
           <Tab label="View Address" value="4" />
         </TabList>
@@ -34,9 +34,9 @@ function ArtistSettings() {
         <LazyEditDetails/>
         </React.Suspense>
       </TabPanel>
-      <TabPanel value="2">
-        {/* <ChangePassword/> */}
-      </TabPanel>
+      {/* <TabPanel value="2">
+        <ChangePassword/>
+      </TabPanel> */}
       
       <TabPanel value="3">
       {/* fallback={<SkeletonLoading/>} */}

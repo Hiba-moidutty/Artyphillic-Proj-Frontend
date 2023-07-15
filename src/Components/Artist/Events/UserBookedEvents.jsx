@@ -66,7 +66,7 @@ function UserBookedEvents() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-           <img src={decodeURIComponent(event.user_profileimg).replace('/https:', 'https:')} alt="" />
+           <img src={decodeURIComponent(event.user_profileimg).replace('/https:', 'https:/')} alt="" />
                   <Link 
                         to={`/profile/${event.username}`}
                         style={{ textDecoration: "none", color: "inherit" }}

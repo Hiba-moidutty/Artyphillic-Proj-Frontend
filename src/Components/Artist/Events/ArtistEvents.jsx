@@ -46,7 +46,7 @@ function ArtistEvents() {
       {events.length == 0 ?(
          <>
          <div className="post">
-         <NoDataFound data={"Posts"}/>
+         <NoDataFound data={"Events"}/>
          </div>
          {/* <SkeltonLoad /> */}
          </>
@@ -67,7 +67,7 @@ function ArtistEvents() {
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               <div className='artist-info'>
-           <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:')} alt="" />
+           <img src={decodeURIComponent(event.artist_profileimg).replace('/https:', 'https:/')} alt="" />
                   <Link 
                         to={`/profile/${event.artist_id}`}
                         style={{ textDecoration: "none", color: "inherit" }}

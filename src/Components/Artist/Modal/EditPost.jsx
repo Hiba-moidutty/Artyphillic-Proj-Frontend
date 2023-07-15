@@ -109,7 +109,7 @@ function EditPostModal({ postId, postedArtistId, artistId, content, postImage}) 
               onChange={(e) => setEditContent(e.target.value)}
             />
           </Typography>
-          {editImage && (<img src={decodeURIComponent(editImage).replace('/https:', 'https:')} style={{ width: "100px", height: "100px", marginTop: "20px" }} alt="postImage" />)}
+          {editImage && (<img src={decodeURIComponent(editImage).replace('/https:', 'https:/')} style={{ width: "100px", height: "100px", marginTop: "20px" }} alt="postImage" />)}
           {selectedImage && (
             <div >
               <img
